@@ -1,0 +1,22 @@
+#!/bin/bash
+DIR=$(dirname $0)
+RHINO_JAR="../rhino/js.jar"
+JS_FILE="$DIR/narcissus_main.js"
+JS="java -jar $RHINO_JAR -require"
+
+if [ ! -e $RHINO_JAR ]; then
+    echo "ERROR: misconfigured, cannot find js.jar"
+    exit 1
+fi
+
+if [ ! -e $JS_FILE ]; then
+    echo "ERROR: misconfigured, cannot find $JS_FILE"
+    exit 1
+fi
+
+if [ x"$1" = x"-r" ]; then
+    shift
+    $JS $JS_FILE -- "$@"
+else
+    $JS $JS_FILE -- "$@" | xmllint --format -
+fi

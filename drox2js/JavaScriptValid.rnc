@@ -1,0 +1,679 @@
+default namespace js = "http://drosoft.org/ns/drosera/jsxml"
+namespace drox = "http://drosoft.org/ns/drosera"
+namespace m = "http://www.w3.org/1998/Math/MathML"
+
+start = js.Program
+
+js.and.symbol		= element m:csymbol { attribute cd { "logic1" }, "and" }
+js.arguments.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "arguments" }
+js.array.symbol		= element m:csymbol { attribute cd { "ecmascript3" }, "array" }
+js.assign.symbol	= element m:csymbol { attribute cd { "prog1" }, "assignment" }
+js.assign_op.symbol	= element m:csymbol { attribute cd { "prog2" }, "assignment_operator" }
+js.begin.symbol		= element m:csymbol { attribute cd { "prog2" }, "begin" }
+js.bitand.symbol	= element m:csymbol { attribute cd { "bitwise1" }, "and" }
+js.bitnot.symbol	= element m:csymbol { attribute cd { "bitwise1" }, "not" }
+js.bitor.symbol		= element m:csymbol { attribute cd { "bitwise1" }, "or" }
+js.bitxor.symbol	= element m:csymbol { attribute cd { "bitwise1" }, "xor" }
+js.block.symbol		= element m:csymbol { attribute cd { "prog1" }, "block" }
+js.break.symbol		= element m:csymbol { attribute cd { "prog2" }, "break" }
+js.case.symbol		= element m:csymbol { attribute cd { "switch1" }, "case" }
+js.catch.symbol		= element m:csymbol { attribute cd { "prog2" }, "catch" }
+js.cond.symbol		= element m:csymbol { attribute cd { "switch2" }, "cond" }
+js.const.symbol		= element m:csymbol { attribute cd { "ecmascript4" }, "const" }
+js.continue.symbol	= element m:csymbol { attribute cd { "prog2" }, "continue" }
+js.debugger.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "debugger" }
+js.dec.symbol		= element m:csymbol { attribute cd { "prog2" }, "decrement" }
+js.decuri.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "decodeURI" }
+js.decuric.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "decodeURIComponent" }
+js.delete.symbol	= element m:csymbol { attribute cd { "prog2" }, "delete" }
+js.divide.symbol	= element m:csymbol { attribute cd { "arith1" }, "divide" }
+js.do_while.symbol	= element m:csymbol { attribute cd { "prog2" }, "do_while" }
+js.dot.symbol		= element m:csymbol { attribute cd { "prog2" }, "namespace_selector" }
+js.empty.symbol		= element m:csymbol { attribute cd { "prog2" }, "empty" }
+js.encuri.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "encodeURI" }
+js.encuric.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "encodeURIComponent" }
+js.eq.symbol		= element m:csymbol { attribute cd { "relation1" }, "eq" }
+js.eval.symbol		= element m:csymbol { attribute cd { "ecmascript3" }, "eval" }
+js.false.symbol 	= element m:csymbol { attribute cd { "logic1" }, "false" }
+js.finally.symbol	= element m:csymbol { attribute cd { "prog2" }, "finally" }
+js.for.symbol		= element m:csymbol { attribute cd { "prog1" }, "for" }
+js.for_each.symbol	= element m:csymbol { attribute cd { "prog2" }, "for_each" }
+js.function.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "function" }
+js.geq.symbol		= element m:csymbol { attribute cd { "relation1" }, "geq" }
+js.get.symbol		= element m:csymbol { attribute cd { "ecmascript3" }, "get" }
+js.gt.symbol		= element m:csymbol { attribute cd { "relation1" }, "gt" }
+js.if.symbol 		= element m:csymbol { attribute cd { "prog1" }, "if" }
+js.ifexp.symbol		= element m:csymbol { attribute cd { "prog2" }, "if_exp" }
+js.in.symbol		= element m:csymbol { attribute cd { "ecmascript3" }, "in" }
+js.inc.symbol		= element m:csymbol { attribute cd { "prog2" }, "increment" }
+js.index.symbol		= element m:csymbol { attribute cd { "ecmascript3" }, "selector" }
+js.instance.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "instanceof" }
+js.label.symbol		= element m:csymbol { attribute cd { "prog2" }, "label" }
+js.lambda.symbol	= element m:csymbol { attribute cd { "fns1" }, "lambda" }
+js.leq.symbol		= element m:csymbol { attribute cd { "relation1" }, "leq" }
+js.lshift.symbol	= element m:csymbol { attribute cd { "bitwise3" }, "left_shift" }
+js.lt.symbol		= element m:csymbol { attribute cd { "relation1" }, "lt" }
+js.minus.symbol		= element m:csymbol { attribute cd { "arith1" }, "minus" }
+js.neq.symbol		= element m:csymbol { attribute cd { "relation1" }, "neq" }
+js.new.symbol		= element m:csymbol { attribute cd { "prog2" }, "new" }
+js.not.symbol		= element m:csymbol { attribute cd { "logic1" }, "not" }
+js.null.symbol 		= element m:csymbol { attribute cd { "prog2" }, "null" }
+js.object.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "object" }
+js.or.symbol		= element m:csymbol { attribute cd { "logic1" }, "or" }
+js.parsef.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "parseFloat" }
+js.parsei.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "parseInt" }
+js.plus.symbol		= element m:csymbol { attribute cd { "arith2" }, "plus" }
+js.post_dec.symbol	= element m:csymbol { attribute cd { "prog2" }, "post_decrement" }
+js.post_inc.symbol	= element m:csymbol { attribute cd { "prog2" }, "post_increment" }
+js.regexp.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "regexp" }
+js.regexp.symbol 	= element m:csymbol { attribute cd { "ecmascript3" }, "regexp" }
+js.rem.symbol		= element m:csymbol { attribute cd { "arith1" }, "rem" }
+js.return.symbol	= element m:csymbol { attribute cd { "prog1" }, "return" }
+js.script.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "script" }
+js.set.symbol		= element m:csymbol { attribute cd { "ecmascript3" }, "set" }
+js.srshift.symbol	= element m:csymbol { attribute cd { "bitwise3" }, "arithmetic_right_shift" }
+js.stricteq.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "strict_eq" }
+js.strictneq.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "strict_neq" }
+js.this.symbol		= element m:csymbol { attribute cd { "ecmascript3" }, "this" }
+js.throw.symbol		= element m:csymbol { attribute cd { "prog2" }, "throw" }
+js.times.symbol		= element m:csymbol { attribute cd { "arith1" }, "times" }
+js.true.symbol 		= element m:csymbol { attribute cd { "logic1" }, "true" }
+js.try.symbol		= element m:csymbol { attribute cd { "prog2" }, "try" }
+js.typeof.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "typeof" }
+js.uminus.symbol	= element m:csymbol { attribute cd { "arith1" }, "unary_minus" }
+js.undefined.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "undefined" }
+js.uplus.symbol		= element m:csymbol { attribute cd { "arith2" }, "unary_plus" }
+js.urshift.symbol	= element m:csymbol { attribute cd { "bitwise3" }, "right_shift" }
+js.var.symbol		= element m:csymbol { attribute cd { "prog1" }, "local_var" }
+js.void.symbol		= element m:csymbol { attribute cd { "ecmascript3" }, "void" }
+js.while.symbol		= element m:csymbol { attribute cd { "prog1" }, "while" }
+js.with.symbol 		= element m:csymbol { attribute cd { "ecmascript3" }, "with" }
+
+#js.generator.symbol	= element m: csymbol { attribute cd { "ecmascript4" }, "generator" }
+#js.yield.symbol		= element m: csymbol { attribute cd { "ecmascript4" }, "yield" }
+
+js.math.0.symbol		= element m:csymbol { attribute cd { "alg1" }, "zero" }
+js.math.1.symbol		= element m:csymbol { attribute cd { "alg1" }, "one" }
+js.math.abs.symbol		= element m:csymbol { attribute cd { "arith1" }, "abs" }
+js.math.acos.symbol		= element m:csymbol { attribute cd { "transc1" }, "arccos" }
+js.math.asin.symbol		= element m:csymbol { attribute cd { "transc1" }, "arcsin" }
+js.math.atan.symbol		= element m:csymbol { attribute cd { "transc1" }, "arctan" }
+js.math.atan2.symbol	= element m:csymbol { attribute cd { "transc2" }, "arctan" }
+js.math.ceil.symbol		= element m:csymbol { attribute cd { "rounding1" }, "ceiling" }
+js.math.cos.symbol		= element m:csymbol { attribute cd { "transc1" }, "cos" }
+js.math.e.symbol		= element m:csymbol { attribute cd { "nums1" }, "e" }
+js.math.exp.symbol		= element m:csymbol { attribute cd { "transc1" }, "exp" }
+js.math.floor.symbol	= element m:csymbol { attribute cd { "rounding1" }, "floor" }
+js.math.log.symbol		= element m:csymbol { attribute cd { "transc1" }, "ln" }
+js.math.max.symbol		= element m:csymbol { attribute cd { "minmax1" }, "max" }
+js.math.min.symbol		= element m:csymbol { attribute cd { "minmax1" }, "min" }
+js.math.pi.symbol		= element m:csymbol { attribute cd { "nums1" }, "pi" }
+js.math.pow.symbol		= element m:csymbol { attribute cd { "arith1" }, "power" }
+js.math.random.symbol	= element m:csymbol { attribute cd { "random1" }, "random_unit" }
+js.math.round.symbol	= element m:csymbol { attribute cd { "rounding_rnp" }, "round" }
+js.math.sin.symbol		= element m:csymbol { attribute cd { "transc1" }, "sin" }
+js.math.sqrt.symbol		= element m:csymbol { attribute cd { "transc1" }, "sqrt" }
+js.math.tan.symbol		= element m:csymbol { attribute cd { "transc1" }, "tan" }
+js.math.nan.symbol		= element m:csymbol { attribute cd { "nums1" }, "NaN" }
+js.math.inf.symbol		= element m:csymbol { attribute cd { "nums1" }, "infinity" }
+js.math.isnan.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "isNaN" }
+js.math.isfin.symbol	= element m:csymbol { attribute cd { "ecmascript3" }, "isFinite" }
+
+js.Literal =
+	  js.null.symbol
+	| js.true.symbol
+	| js.false.symbol
+	| js.cn
+	| js.cs
+	| js.regexp
+
+js.cn = element m:cn {
+	attribute type { text }?,
+	text,
+ 	(element m:sep { empty }, text)?
+}
+js.cs = element m:cs {
+	attribute type { text }?,
+	attribute lang { text }?,
+	text
+}
+js.regexp = element m:apply {
+	js.regexp.symbol,
+	attribute flags { text }?,
+	text
+}
+
+js.this = element this { empty }
+js.get = element get { empty }
+js.set = element get { empty }
+js.ci = element ci { text }
+
+##
+## A.3 Expressions
+##
+
+js.PrimaryExpression =
+	  js.this
+	| js.ci
+	| js.Literal
+	| js.ArrayLiteral
+	| js.ObjectLiteral
+
+js.ArrayLiteral = element list {
+	js.AssignmentExpression*
+}
+
+js.ObjectLiteral = element dl {
+	js.PropertyAssignment*
+}
+
+js.PropertyAssignment =
+	  js.di
+	| js.get
+	| js.set
+	| js.FunctionExpression
+
+js.PropertyName =
+	  js.ci
+	| js.cs
+	| js.cn
+
+js.di = element di {
+	element dt { js.PropertyName },
+	js.AssignmentExpression
+}
+
+js.MemberExpression = 
+	  js.PrimaryExpression
+	| js.FunctionExpression
+	| js.IndexExpression
+	| js.DotExpression
+
+js.NewElement = element new { empty }
+js.NewExpression = element m:apply {
+	js.NewElement,
+	js.Expression*
+}
+
+js.IndexElement = element selector { empty }
+js.IndexExpression = element m:apply {
+	js.IndexElement,
+	js.Expression,
+	js.Expression*
+}
+
+js.DotElement = element dot { empty }
+js.DotExpression = element m:apply {
+	js.DotElement,
+	js.Expression,
+	js.ci*
+}
+
+#
+# ApplyExpression is not in ECMAScript
+#
+js.ApplyExpression = element m:apply {
+	js.Expression,
+	js.Arguments
+}
+
+js.CallExpression = 
+	  js.MemberExpression
+	| js.ApplyExpression
+	| js.IndexExpression
+	| js.DotExpression
+
+js.Arguments = js.AssignmentExpression*
+
+#
+# LeftHandSideExpression is so important!
+#
+js.LeftHandSideExpression =
+	  js.NewExpression
+	| js.CallExpression
+
+
+
+
+# § 
+# § 
+# § 
+# § 
+# § 
+# § 
+# § 
+
+# § 11.7.1 The Left Shift Operator (<<)
+#
+# Example .js:
+#   base << exp
+#
+# Example .drox:
+#   <m:apply>
+#     <m:csymbol cd="bitwise3">left_shift</m:csymbol>
+#     <m:ci>base</m:ci>
+#     <m:ci>exp</m:ci>
+#   </m:apply>
+#
+js.ShiftExpression = element m:apply {
+    js.lshift.symbol,
+    js.Expression,
+    js.Expression
+}
+
+# § 11.7.2 The Signed Right Shift Operator (>>)
+#
+# Example .js:
+#   base >> exp
+#
+# Example .drox:
+#   <m:apply>
+#     <m:csymbol cd="bitwise3">arithmetic_right_shift</m:csymbol>
+#     <m:ci>base</m:ci>
+#     <m:ci>exp</m:ci>
+#   </m:apply>
+#
+js.ShiftExpression |= element m:apply {
+    js.srshift.symbol,
+    js.Expression,
+    js.Expression
+}
+
+# § 11.7.3 The Unsigned Right Shift Operator (>>>)
+#
+# Example .js:
+#   base >>> exp
+#
+# Example .drox:
+#   <m:apply>
+#     <m:csymbol cd="bitwise3">right_shift</m:csymbol>
+#     <m:ci>base</m:ci>
+#     <m:ci>exp</m:ci>
+#   </m:apply>
+#
+js.ShiftExpression |= element m:apply {
+    js.urshift.symbol,
+    js.Expression,
+    js.Expression
+}
+
+# § 11.8.6 The instanceof operator
+#
+# Example .js:
+#   a instanceof b
+#   b._HasInstance(a)
+#
+js.InstanceofExpression = element m:apply {
+    js.instanceof.symbol,
+    js.Expression,
+    js.Expression
+}
+
+# § 11.8.7 The in operator
+#
+# Example .js:
+#   a in b
+#   b._HasProperty(String(a))
+#
+js.InExpression = element m:apply {
+    js.in.symbol,
+    js.Expression,
+    js.Expression
+}
+
+
+
+# § 11.12 Conditional Operator (?:)
+#
+# Example .js:
+#   (x % 2 == 0) ? "even" : "odd"
+#
+# Example .drox:
+#   <m:apply>
+#     <m:csymbol cd="prog2">if_exp</m:csymbol>
+#     <m:apply>
+#       <m:csymbol cd="ecmascript3">eq</m:csymbol>
+#       <m:apply>
+#         <m:csymbol cd="arith1">rem</m:csymbol>
+#         <m:ci>x</m:ci>
+#         <m:cn>2</m:cn>
+#       </m:apply>
+#       <m:csymbol cd="alg1">zero</m:csymbol>
+#     </m:apply>
+#     <m:cs>even</m:cs>
+#     <m:cs>odd</m:cs>
+#   </m:apply>
+#
+js.ConditionalExpression = js.LeftHandSideExpression | element m:apply {
+	js.if_exp.symbol,
+	js.Expression*
+}
+
+
+# § 11.13.1 Simple Assignment (=)
+#
+# Example .js:
+#   this.name = "Alice"
+#
+# Example .drox:
+#   <drox:dl>
+#     <m:csymbol cd="prog1">assignment</m:csymbol>
+#     <drox:dt>
+#       <drox:ns>this.name<drox:ns>
+#     </drox:dt>
+#     <m:cs>Alice</m:cs>
+#   </drox:dl>
+#
+js.SimpleAssignmentExpression =  element drox:dl {
+	js.assign.symbol
+	js.LeftHandSideExpression,
+	js.Expression
+}
+
+
+# § 11.13.2 Compound Assignment (op=)
+#
+# Example .js:
+#   this.direction *= -1
+#
+# Example .drox:
+#   <drox:dl>
+#     <m:csymbol cd="prog2">assignment_operator</m:csymbol>
+#     <drox:dt>
+#       <drox:ns>this.direction<drox:ns>
+#     </drox:dt>
+#     <m:csymbol cd="arith1">times</m:csymbol>
+#     <m:cn>-1</m:cn>
+#   </drox:dl>
+#
+js.CompoundAssignmentExpression = element drox:dl {
+        js.assign_op.symbol,
+	js.LeftHandSideExpression, # binding MUST be the second child of dl
+	js.assignable_op.symbol,
+	js.Expression
+}
+js.assignable_op.symbol =
+	  js.plus.symbol
+	| js.minus.symbol
+	| js.times.symbol
+	| js.divide.symbol
+	| js.rem.symbol
+	| js.shift_left.symbol
+	| js.shift_arith.symbol
+	| js.shift_right.symbol
+	| js.bitand.symbol
+	| js.bitor.symbol
+	| js.bitxor.symbol
+
+
+# § 11.14 Comma Operator (,)
+#
+# Example .js:
+#   (++i, j--)
+#
+# Example .drox:
+#   <m:apply>
+#     <m:csymbol cd="prog2">begin</m:csymbol>
+#     <drox:dl>
+#       <m:csymbol cd="prog2">increment</m:csymbol>
+#       <drox:dt><m:ci>i</m:ci></drox:dt>
+#     </drox:dl>
+#     <drox:dl>
+#       <m:csymbol cd="prog2">post_decrement</m:csymbol>
+#       <drox:dt><m:ci>j</m:ci></drox:dt>
+#     </drox:dl>
+#   </m:apply>
+#
+js.CommaExpression = element m:apply {
+	js.begin.symbol,
+	js.AssignmentExpression*
+}
+
+js.Expression =
+	  js.LeftHandSideExpression
+	| js.DeleteExpression
+	| js.PostDecExpression
+	| js.PostIncExpression
+	| js.PreDecExpression
+	| js.PreIncExpression
+	| js.TypeofExpression
+	| js.VoidExpression
+	| js.PlusExpression
+	| js.MinusExpression
+	| js.ComplementExpression
+	| js.NotExpression
+	| js.TimesExpression
+	| js.DivideExpression
+	| js.ModExpression
+	| js.RShiftExpression
+	| js.LShiftExpression
+	| js.AShiftExpression
+	| js.LtExpression
+	| js.GtExpression
+	| js.GeExpression
+	| js.LeExpression
+	| js.InstanceOfExpression
+	| js.InExpression
+	| js.EqExpression
+	| js.NeExpression
+	| js.StrictEqExpression
+	| js.StrictNeExpression
+	| js.BitwiseAndExpression
+	| js.BitwiseXorExpression
+	| js.BitwiseOrExpression
+	| js.LogicalAndExpression
+	| js.LogicalOrExpression
+	| js.ConditionalExpression
+	| js.SimpleAssignmentExpression
+	| js.CompoundAssignmentExpression
+	| js.CommaExpression
+
+js.ExpressionStatement = js.Expression
+js.ExpressionElement = ( js.Expression | element dt { js.Expression } )
+
+##
+## A.4 Statements
+##
+
+js.Statement = 
+	  js.Block
+	| js.EmptyStatement
+	| js.VariableStatement
+	| js.ExpressionStatement
+	| js.IfStatement
+	| js.IterationStatement
+	| js.ContinueStatement
+	| js.BreakStatement
+	| js.ReturnStatement
+	| js.WithStatement
+	| js.LabelledStatement
+	| js.SwitchStatement
+	| js.ThrowStatement
+	| js.TryStatement
+	| js.DebuggerStatement
+
+# <block><block/></block> is rendered "{}"
+js.Block = element block {
+	js.Statement*
+}
+
+# <block/> is rendered ";"
+js.EmptyStatement = element block { empty }
+
+js.VariableStatement = element var {
+	js.VariableDeclaration*
+}
+
+js.VariableDeclarationList = js.VariableDeclaration*
+js.VariableDeclaration = js.ci | element di {
+	js.ci,
+	js.AssignmentExpression?
+}
+
+#	<var>
+#		<ci>
+#		<di>
+#			<ci>
+#			value
+
+js.IfElseElement = element if { empty }
+js.IfElseExpression = element m:apply {
+	js.IfElement,
+	js.ExpressionElement,
+	js.Statement*
+}
+
+js.IfElement = element cond { empty }
+js.IfStatement = element cond {
+	js.IfElseElement,
+	js.CaseClause*,
+	js.DefaultClause?
+}
+
+js.WhileElement = element while { empty }
+js.DoWhileElement = element dowhile { empty }
+js.ForEachElement = element foreach { empty }
+js.ForElement = element for { empty }
+
+js.WhileStatement = element m:apply {
+	js.WhileElement,
+	js.ExpressionElement,
+	js.Statement*
+}
+
+js.DoWhileStatement = element m:apply {
+	js.DoWhileElement,
+	js.ExpressionElement,
+	js.Statement*
+}
+
+js.ForEachStatement = element m:apply {
+	js.ForEachElement,
+	element list {
+		js.ExpressionElement,
+		js.ExpressionElement
+	},
+	js.Statement*
+}
+
+js.ForStatement = element m:apply {
+	js.ForElement,
+	element list {
+		js.ExpressionElement,
+		js.ExpressionElement,
+		js.ExpressionElement
+	},
+	js.Statement*
+}
+
+js.IterationStatement = 
+	  js.DoWhileStatement
+	| js.WhileStatement
+	| js.ForStatement
+	| js.ForEachStatement
+
+js.ContinueElement = element continue { empty }
+js.ContinueStatement = element m:apply {
+	js.ContinueElement,
+	js.ci?
+}
+
+js.BreakElement = element break { empty }
+js.BreakStatement = element m:apply {
+	js.BreakElement,
+	js.ci?
+}
+
+js.ReturnElement = element return { empty }
+js.ReturnStatement = element m:apply {
+	js.ReturnElement,
+	js.Expression?
+}
+
+js.WithElement = element with { empty }
+js.WithStatement = element m:apply {
+	js.WithElement,
+	js.ExpressionElement,
+	js.Statement*
+}
+
+js.SwitchElement = element case { empty }
+js.SwitchStatement = element m:apply {
+	js.SwitchElement,
+	js.ExpressionElement,
+	js.CaseClause*,
+	js.DefaultClause?
+}
+
+js.CaseClause = element di {
+	js.ExpressionElement,
+	js.Statement*
+}
+
+js.DefaultClause = element else {
+	js.Statement*
+}
+
+js.LabelledStatement = element label {
+	js.ci
+}
+
+js.ThrowElement = element throw { empty }
+js.ThrowStatement = element m:apply {
+	js.ThrowElement,
+	js.Expression
+}
+
+js.TryElement = element try { empty }
+js.TryStatement = element m:apply {
+	js.TryElement,
+	js.Statement*,
+	( js.CatchClause
+	| js.FinallyClause
+	|(js.CatchClause, 
+	  js.FinallyClause))
+}
+
+js.CatchClause = element di {
+	js.ci,
+	js.Statement*
+}
+
+js.FinallyClause = element else {
+	js.Statement*
+}
+
+js.DebuggerElement = element debugger { empty }
+js.DebuggerStatement = element m:apply {
+	js.DebuggerElement
+}
+
+##
+## A.5 Functions and Programs
+##
+
+js.FunctionDeclaration = element function {
+	js.ci,
+	js.FormalParameterList,
+	js.SourceElement*
+}
+
+js.LambdaExpression = element lambda {
+	js.FormalParameterList,
+	js.SourceElement*
+}
+
+js.FormalParameterList = element m:bvar { js.ci }*
+
+js.FunctionExpression = 
+	  js.FunctionDeclaration
+	| js.LambdaExpression
+
+js.Program = element drox:dl {
+	element csymbol { attribute cd { "ecmascript3" }, "script" },
+	js.SourceElement*
+}
+
+js.SourceElement = 
+	  js.Statement 
+	| js.FunctionDeclaration

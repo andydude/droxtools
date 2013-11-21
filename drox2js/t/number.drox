@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<drox:script xmlns:drox="x" xmlns:m="m">
+  <m:apply>
+    <drox:ns>Object.extend</drox:ns>
+    <drox:ns>Number.prototype</drox:ns>
+    <m:apply>
+      <m:bind>
+        <m:csymbol cd="fns1">lambda</m:csymbol>
+        <drox:dl>
+          <m:csymbol cd="ecmascript3">function</m:csymbol>
+          <drox:dt>
+            <m:ci>toColorPart</m:ci>
+          </drox:dt>
+          <m:apply>
+            <m:csymbol cd="prog1">return</m:csymbol>
+            <m:apply>
+              <m:apply>
+                <m:csymbol cd="prog2">namespace_selector</m:csymbol>
+                <m:csymbol cd="context1">this</m:csymbol>
+                <m:ci>toPaddedString</m:ci>
+              </m:apply>
+              <m:cn>2</m:cn>
+              <m:cn>16</m:cn>
+            </m:apply>
+          </m:apply>
+        </drox:dl>
+        <drox:dl>
+          <m:csymbol cd="ecmascript3">function</m:csymbol>
+          <drox:dt>
+            <m:ci>succ</m:ci>
+          </drox:dt>
+          <m:apply>
+            <m:csymbol cd="prog1">return</m:csymbol>
+            <m:apply>
+              <m:csymbol cd="arith2">plus</m:csymbol>
+              <m:csymbol cd="context1">this</m:csymbol>
+              <m:cn>1</m:cn>
+            </m:apply>
+          </m:apply>
+        </drox:dl>
+        <drox:dl>
+          <m:csymbol cd="ecmascript3">function</m:csymbol>
+          <drox:dt>
+            <m:ci>times</m:ci>
+          </drox:dt>
+          <m:bvar>
+            <m:ci>iterator</m:ci>
+          </m:bvar>
+          <m:bvar>
+            <m:ci>context</m:ci>
+          </m:bvar>
+          <m:apply>
+            <m:apply>
+              <m:csymbol cd="prog2">namespace_selector</m:csymbol>
+              <m:apply>
+                <m:ci>$R</m:ci>
+                <m:cn>0</m:cn>
+                <m:csymbol cd="context1">this</m:csymbol>
+                <m:csymbol cd="logic1">true</m:csymbol>
+              </m:apply>
+              <m:ci>each</m:ci>
+            </m:apply>
+            <m:ci>iterator</m:ci>
+            <m:ci>context</m:ci>
+          </m:apply>
+          <m:apply>
+            <m:csymbol cd="prog1">return</m:csymbol>
+            <m:csymbol cd="context1">this</m:csymbol>
+          </m:apply>
+        </drox:dl>
+        <drox:dl>
+          <m:csymbol cd="ecmascript3">function</m:csymbol>
+          <drox:dt>
+            <m:ci>toPaddedString</m:ci>
+          </drox:dt>
+          <m:bvar>
+            <m:ci>length</m:ci>
+          </m:bvar>
+          <m:bvar>
+            <m:ci>radix</m:ci>
+          </m:bvar>
+          <drox:dl>
+            <m:csymbol cd="prog1">local_var</m:csymbol>
+            <drox:di>
+              <drox:dt>
+                <m:ci>string</m:ci>
+              </drox:dt>
+              <m:apply>
+                <m:apply>
+                  <m:csymbol cd="prog2">namespace_selector</m:csymbol>
+                  <m:csymbol cd="context1">this</m:csymbol>
+                  <m:ci>toString</m:ci>
+                </m:apply>
+                <m:apply>
+                  <m:csymbol cd="logic1">or</m:csymbol>
+                </m:apply>
+              </m:apply>
+            </drox:di>
+          </drox:dl>
+          <m:apply>
+            <m:csymbol cd="prog1">return</m:csymbol>
+            <m:apply>
+              <m:csymbol cd="arith2">plus</m:csymbol>
+              <m:apply>
+                <m:apply>
+                  <m:csymbol cd="prog2">namespace_selector</m:csymbol>
+                  <m:cs>0</m:cs>
+                  <m:ci>times</m:ci>
+                </m:apply>
+                <m:apply>
+                  <m:csymbol cd="arith1">minus</m:csymbol>
+                  <m:ci>length</m:ci>
+                  <drox:ns>string.length</drox:ns>
+                </m:apply>
+              </m:apply>
+              <m:ci>string</m:ci>
+            </m:apply>
+          </m:apply>
+        </drox:dl>
+        <drox:dl>
+          <m:csymbol cd="ecmascript3">function</m:csymbol>
+          <drox:dt>
+            <m:ci>abs</m:ci>
+          </drox:dt>
+          <m:apply>
+            <m:csymbol cd="prog1">return</m:csymbol>
+            <m:apply>
+              <m:csymbol cd="arith1">abs</m:csymbol>
+              <m:csymbol cd="context1">this</m:csymbol>
+            </m:apply>
+          </m:apply>
+        </drox:dl>
+        <drox:dl>
+          <m:csymbol cd="ecmascript3">function</m:csymbol>
+          <drox:dt>
+            <m:ci>round</m:ci>
+          </drox:dt>
+          <m:apply>
+            <m:csymbol cd="prog1">return</m:csymbol>
+            <m:apply>
+              <m:csymbol cd="rounding_rnp">round</m:csymbol>
+              <m:csymbol cd="context1">this</m:csymbol>
+            </m:apply>
+          </m:apply>
+        </drox:dl>
+        <drox:dl>
+          <m:csymbol cd="ecmascript3">function</m:csymbol>
+          <drox:dt>
+            <m:ci>ceil</m:ci>
+          </drox:dt>
+          <m:apply>
+            <m:csymbol cd="prog1">return</m:csymbol>
+            <m:apply>
+              <m:csymbol cd="rounding1">ceiling</m:csymbol>
+              <m:csymbol cd="context1">this</m:csymbol>
+            </m:apply>
+          </m:apply>
+        </drox:dl>
+        <drox:dl>
+          <m:csymbol cd="ecmascript3">function</m:csymbol>
+          <drox:dt>
+            <m:ci>floor</m:ci>
+          </drox:dt>
+          <m:apply>
+            <m:csymbol cd="prog1">return</m:csymbol>
+            <m:apply>
+              <m:csymbol cd="rounding1">floor</m:csymbol>
+              <m:csymbol cd="context1">this</m:csymbol>
+            </m:apply>
+          </m:apply>
+        </drox:dl>
+        <m:apply>
+          <m:csymbol cd="prog1">return</m:csymbol>
+          <drox:dl>
+            <m:csymbol cd="ecmascript3">object</m:csymbol>
+            <drox:di>
+              <m:ci>toColorPart</m:ci>
+              <m:ci>toColorPart</m:ci>
+            </drox:di>
+            <drox:di>
+              <m:ci>succ</m:ci>
+              <m:ci>succ</m:ci>
+            </drox:di>
+            <drox:di>
+              <m:ci>times</m:ci>
+              <m:ci>times</m:ci>
+            </drox:di>
+            <drox:di>
+              <m:ci>toPaddedString</m:ci>
+              <m:ci>toPaddedString</m:ci>
+            </drox:di>
+            <drox:di>
+              <m:ci>abs</m:ci>
+              <m:ci>abs</m:ci>
+            </drox:di>
+            <drox:di>
+              <m:ci>round</m:ci>
+              <m:ci>round</m:ci>
+            </drox:di>
+            <drox:di>
+              <m:ci>ceil</m:ci>
+              <m:ci>ceil</m:ci>
+            </drox:di>
+            <drox:di>
+              <m:ci>floor</m:ci>
+              <m:ci>floor</m:ci>
+            </drox:di>
+          </drox:dl>
+        </m:apply>
+      </m:bind>
+    </m:apply>
+  </m:apply>
+</drox:script>

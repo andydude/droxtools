@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<drox:dl xmlns:drox="http://drosoft.org/ns/drosera" xmlns:py="http://drosoft.org/ns/drosera/pythonxml" xmlns:m="http://www.w3.org/1998/Math/MathML">
+  <m:csymbol cd="python2">module</m:csymbol>
+  <drox:dl>
+    <m:csymbol cd="python2">def</m:csymbol>
+    <drox:dt>
+      <m:ci>my_func</m:ci>
+    </drox:dt>
+    <m:bvar>
+      <m:ci>a</m:ci>
+    </m:bvar>
+    <m:bvar>
+      <m:ci>b</m:ci>
+    </m:bvar>
+    <m:bvar>
+      <m:ci>c</m:ci>
+      <drox:init>
+        <m:cn>3</m:cn>
+      </drox:init>
+    </m:bvar>
+    <m:bvar>
+      <m:apply>
+        <m:csymbol cd="python2">args</m:csymbol>
+        <m:ci>y</m:ci>
+      </m:apply>
+    </m:bvar>
+    <m:bvar>
+      <m:apply>
+        <m:csymbol cd="python2">kwargs</m:csymbol>
+        <m:ci>z</m:ci>
+      </m:apply>
+    </m:bvar>
+    <m:apply>
+      <m:csymbol cd="prog2">empty</m:csymbol>
+    </m:apply>
+  </drox:dl>
+  <m:apply>
+    <m:csymbol cd="prog2">if</m:csymbol>
+    <m:apply>
+      <m:csymbol cd="relation1">eq</m:csymbol>
+      <m:ci>__name__</m:ci>
+      <m:cs>__main__</m:cs>
+    </m:apply>
+    <drox:dl>
+      <m:csymbol cd="prog1">assignment</m:csymbol>
+      <drox:dt>
+        <m:ci>my_list</m:ci>
+      </drox:dt>
+      <m:apply>
+        <m:csymbol cd="python2">list</m:csymbol>
+        <m:csymbol cd="alg1">one</m:csymbol>
+        <m:cn>2</m:cn>
+        <m:cn>3</m:cn>
+      </m:apply>
+    </drox:dl>
+    <drox:dl>
+      <m:csymbol cd="prog1">assignment</m:csymbol>
+      <drox:dt>
+        <m:ci>my_dict</m:ci>
+      </drox:dt>
+      <m:apply>
+        <m:csymbol cd="python2">dict</m:csymbol>
+        <m:cs>i</m:cs>
+        <m:cs>k</m:cs>
+        <m:cs>j</m:cs>
+        <m:cs>l</m:cs>
+      </m:apply>
+    </drox:dl>
+    <m:apply>
+      <m:ci>my_func</m:ci>
+      <m:cn>7</m:cn>
+      <m:cn>8</m:cn>
+      <m:cn>9</m:cn>
+      <m:apply>
+        <m:csymbol cd="python2">args</m:csymbol>
+        <m:ci>my_list</m:ci>
+      </m:apply>
+      <m:apply>
+        <m:csymbol cd="python2">kwargs</m:csymbol>
+        <m:ci>my_dict</m:ci>
+      </m:apply>
+    </m:apply>
+  </m:apply>
+</drox:dl>

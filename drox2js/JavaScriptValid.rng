@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="http://drosoft.org/ns/drosera/jsxml" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:js="http://drosoft.org/ns/drosera/jsxml" xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <ref name="js.Program"/>
+  </start>
+  <define name="js.Literal">
+    <choice>
+      <ref name="js.NullLiteral"/>
+      <ref name="js.BooleanLiteral"/>
+      <ref name="js.cn"/>
+      <ref name="js.cs"/>
+      <ref name="js.RegularExpressionLiteral"/>
+    </choice>
+  </define>
+  <define name="js.NullLiteral">
+    <element name="null">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.TrueLiteral">
+    <element name="true">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.FalseLiteral">
+    <element name="false">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.BooleanLiteral">
+    <choice>
+      <ref name="js.FalseLiteral"/>
+      <ref name="js.TrueLiteral"/>
+    </choice>
+  </define>
+  <define name="js.cn">
+    <element name="cn">
+      <optional>
+        <attribute name="type"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="js.cs">
+    <element name="cs">
+      <optional>
+        <attribute name="lang"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="js.RegularExpressionLiteral">
+    <element name="regexp">
+      <optional>
+        <attribute name="flags"/>
+      </optional>
+      <text/>
+    </element>
+  </define>
+  <define name="js.this">
+    <element name="this">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.get">
+    <element name="get">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.set">
+    <element name="get">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ci">
+    <element name="ci">
+      <text/>
+    </element>
+  </define>
+  <define name="js.PrimaryExpression">
+    <a:documentation>
+A.3 Expressions
+</a:documentation>
+    <choice>
+      <ref name="js.this"/>
+      <ref name="js.ci"/>
+      <ref name="js.Literal"/>
+      <ref name="js.ArrayLiteral"/>
+      <ref name="js.ObjectLiteral"/>
+    </choice>
+  </define>
+  <define name="js.ArrayLiteral">
+    <element name="list">
+      <zeroOrMore>
+        <ref name="js.AssignmentExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.ObjectLiteral">
+    <element name="dl">
+      <zeroOrMore>
+        <ref name="js.PropertyAssignment"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.PropertyAssignment">
+    <choice>
+      <ref name="js.di"/>
+      <ref name="js.get"/>
+      <ref name="js.set"/>
+      <ref name="js.FunctionExpression"/>
+    </choice>
+  </define>
+  <define name="js.PropertyName">
+    <choice>
+      <ref name="js.ci"/>
+      <ref name="js.cs"/>
+      <ref name="js.cn"/>
+    </choice>
+  </define>
+  <define name="js.di">
+    <element name="di">
+      <choice>
+        <ref name="js.PropertyName"/>
+        <element name="dt">
+          <ref name="js.PropertyName"/>
+        </element>
+      </choice>
+      <ref name="js.AssignmentExpression"/>
+    </element>
+  </define>
+  <define name="js.MemberExpression">
+    <choice>
+      <ref name="js.PrimaryExpression"/>
+      <ref name="js.FunctionExpression"/>
+      <ref name="js.IndexExpression"/>
+      <ref name="js.DotExpression"/>
+    </choice>
+  </define>
+  <define name="js.NewElement">
+    <element name="new">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.NewExpression">
+    <element name="apply">
+      <ref name="js.NewElement"/>
+      <zeroOrMore>
+        <ref name="js.Expression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.IndexElement">
+    <element name="selector">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.IndexExpression">
+    <element name="apply">
+      <ref name="js.IndexElement"/>
+      <ref name="js.Expression"/>
+      <zeroOrMore>
+        <ref name="js.Expression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.DotElement">
+    <element name="dot">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.DotExpression">
+    <element name="apply">
+      <ref name="js.DotElement"/>
+      <ref name="js.Expression"/>
+      <zeroOrMore>
+        <ref name="js.ci"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <!--
+    
+    ApplyExpression is not in ECMAScript
+    
+  -->
+  <define name="js.ApplyExpression">
+    <element name="apply">
+      <ref name="js.Expression"/>
+      <ref name="js.Arguments"/>
+    </element>
+  </define>
+  <define name="js.CallExpression">
+    <choice>
+      <ref name="js.MemberExpression"/>
+      <ref name="js.ApplyExpression"/>
+      <ref name="js.IndexExpression"/>
+      <ref name="js.DotExpression"/>
+    </choice>
+  </define>
+  <define name="js.Arguments">
+    <zeroOrMore>
+      <ref name="js.AssignmentExpression"/>
+    </zeroOrMore>
+  </define>
+  <!--
+    
+    LeftHandSideExpression is so important!
+    
+  -->
+  <define name="js.LeftHandSideExpression">
+    <choice>
+      <ref name="js.NewExpression"/>
+      <ref name="js.CallExpression"/>
+    </choice>
+  </define>
+  <define name="js.DeleteElement">
+    <element name="delete">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.PostDecElement">
+    <element name="postdec">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.PostIncElement">
+    <element name="postinc">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.PreDecElement">
+    <element name="dec">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.PreIncElement">
+    <element name="inc">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.TypeofElement">
+    <element name="typeof">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.VoidElement">
+    <element name="void">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.PlusElement">
+    <element name="plus">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.MinusElement">
+    <element name="minus">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ComplementElement">
+    <element name="bitnot">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.NotElement">
+    <element name="not">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.TimesElement">
+    <element name="times">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.DivideElement">
+    <element name="divide">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ModElement">
+    <element name="rem">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.RShiftElement">
+    <element name="shiftr">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.LShiftElement">
+    <element name="shiftl">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.AShiftElement">
+    <element name="ashiftr">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.GeElement">
+    <element name="geq">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.GtElement">
+    <element name="gt">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.LeElement">
+    <element name="leq">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.LtElement">
+    <element name="lt">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.InstanceOfElement">
+    <element name="instanceof">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.InElement">
+    <element name="in">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.EqElement">
+    <element name="eq">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.NeElement">
+    <element name="neq">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.StrictEqElement">
+    <element name="stricteq">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.StrictNeElement">
+    <element name="strictneq">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.BitAndElement">
+    <element name="bitand">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.BitXorElement">
+    <element name="bitxor">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.BitOrElement">
+    <element name="bitor">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.AndElement">
+    <element name="and">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.OrElement">
+    <element name="or">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ConditionalElement">
+    <choice>
+      <ref name="js.DeleteElement"/>
+      <ref name="js.PostDecElement"/>
+      <ref name="js.PostIncElement"/>
+      <ref name="js.PreDecElement"/>
+      <ref name="js.PreIncElement"/>
+      <ref name="js.TypeofElement"/>
+      <ref name="js.VoidElement"/>
+      <ref name="js.PlusElement"/>
+      <ref name="js.MinusElement"/>
+      <ref name="js.ComplementElement"/>
+      <ref name="js.NotElement"/>
+      <ref name="js.TimesElement"/>
+      <ref name="js.DivideElement"/>
+      <ref name="js.ModElement"/>
+      <ref name="js.RShiftElement"/>
+      <ref name="js.LShiftElement"/>
+      <ref name="js.AShiftElement"/>
+      <ref name="js.LtElement"/>
+      <ref name="js.GtElement"/>
+      <ref name="js.GeElement"/>
+      <ref name="js.LeElement"/>
+      <ref name="js.InstanceOfElement"/>
+      <ref name="js.InElement"/>
+      <ref name="js.EqElement"/>
+      <ref name="js.NeElement"/>
+      <ref name="js.StrictEqElement"/>
+      <ref name="js.StrictNeElement"/>
+      <ref name="js.BitAndElement"/>
+      <ref name="js.BitXorElement"/>
+      <ref name="js.BitOrElement"/>
+      <ref name="js.AndElement"/>
+      <ref name="js.OrElement"/>
+      <ref name="js.IfElement"/>
+    </choice>
+  </define>
+  <define name="js.ConditionalExpression">
+    <choice>
+      <ref name="js.LeftHandSideExpression"/>
+      <element name="apply">
+        <ref name="js.ConditionalElement"/>
+        <zeroOrMore>
+          <ref name="js.Expression"/>
+        </zeroOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="js.AssignElement">
+    <element name="is">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.AssignTimesElement">
+    <element name="is">
+      <ref name="js.TimesElement"/>
+    </element>
+  </define>
+  <define name="js.AssignDivideElement">
+    <element name="is">
+      <ref name="js.DivideElement"/>
+    </element>
+  </define>
+  <define name="js.AssignModElement">
+    <element name="is">
+      <ref name="js.ModElement"/>
+    </element>
+  </define>
+  <define name="js.AssignPlusElement">
+    <element name="is">
+      <ref name="js.PlusElement"/>
+    </element>
+  </define>
+  <define name="js.AssignMinusElement">
+    <element name="is">
+      <ref name="js.MinusElement"/>
+    </element>
+  </define>
+  <define name="js.AssignLShiftElement">
+    <element name="is">
+      <ref name="js.LShiftElement"/>
+    </element>
+  </define>
+  <define name="js.AssignRShiftElement">
+    <element name="is">
+      <ref name="js.RShiftElement"/>
+    </element>
+  </define>
+  <define name="js.AssignAShiftElement">
+    <element name="is">
+      <ref name="js.AShiftElement"/>
+    </element>
+  </define>
+  <define name="js.AssignBitAndElement">
+    <element name="is">
+      <ref name="js.BitAndElement"/>
+    </element>
+  </define>
+  <define name="js.AssignBitOrElement">
+    <element name="is">
+      <ref name="js.BitOrElement"/>
+    </element>
+  </define>
+  <define name="js.AssignBitXorElement">
+    <element name="is">
+      <ref name="js.BitXorElement"/>
+    </element>
+  </define>
+  <define name="js.AssignmentElement">
+    <choice>
+      <ref name="js.AssignElement"/>
+      <ref name="js.AssignTimesElement"/>
+      <ref name="js.AssignDivideElement"/>
+      <ref name="js.AssignModElement"/>
+      <ref name="js.AssignPlusElement"/>
+      <ref name="js.AssignMinusElement"/>
+      <ref name="js.AssignLShiftElement"/>
+      <ref name="js.AssignRShiftElement"/>
+      <ref name="js.AssignAShiftElement"/>
+      <ref name="js.AssignBitAndElement"/>
+      <ref name="js.AssignBitOrElement"/>
+      <ref name="js.AssignBitXorElement"/>
+    </choice>
+  </define>
+  <define name="js.AssignmentExpression">
+    <choice>
+      <ref name="js.ConditionalExpression"/>
+      <element name="apply">
+        <ref name="js.AssignmentElement"/>
+        <ref name="js.LeftHandSideExpression"/>
+        <ref name="js.AssignmentExpression"/>
+      </element>
+    </choice>
+  </define>
+  <!--
+    js.AnyElement =
+    	  js.LeftHandSideExpression
+  -->
+  <define name="js.BeginElement">
+    <element name="begin">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.BeginExpression">
+    <choice>
+      <ref name="js.AssignmentExpression"/>
+      <element name="apply">
+        <ref name="js.BeginElement"/>
+        <zeroOrMore>
+          <ref name="js.AssignmentExpression"/>
+        </zeroOrMore>
+      </element>
+    </choice>
+  </define>
+  <define name="js.Expression">
+    <choice>
+      <ref name="js.LeftHandSideExpression"/>
+      <ref name="js.ConditionalExpression"/>
+      <ref name="js.AssignmentExpression"/>
+      <ref name="js.BeginExpression"/>
+    </choice>
+  </define>
+  <define name="js.ExpressionStatement">
+    <ref name="js.Expression"/>
+  </define>
+  <define name="js.ExpressionElement">
+    <choice>
+      <ref name="js.Expression"/>
+      <element name="dt">
+        <ref name="js.Expression"/>
+      </element>
+    </choice>
+  </define>
+  <define name="js.Statement">
+    <a:documentation>
+A.4 Statements
+</a:documentation>
+    <choice>
+      <ref name="js.Block"/>
+      <ref name="js.EmptyStatement"/>
+      <ref name="js.VariableStatement"/>
+      <ref name="js.ExpressionStatement"/>
+      <ref name="js.IfStatement"/>
+      <ref name="js.IterationStatement"/>
+      <ref name="js.ContinueStatement"/>
+      <ref name="js.BreakStatement"/>
+      <ref name="js.ReturnStatement"/>
+      <ref name="js.WithStatement"/>
+      <ref name="js.LabelledStatement"/>
+      <ref name="js.SwitchStatement"/>
+      <ref name="js.ThrowStatement"/>
+      <ref name="js.TryStatement"/>
+      <ref name="js.DebuggerStatement"/>
+    </choice>
+  </define>
+  <!-- <block><block/></block> is rendered "{}" -->
+  <define name="js.Block">
+    <element name="block">
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <!-- <block/> is rendered ";" -->
+  <define name="js.EmptyStatement">
+    <element name="block">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.VariableStatement">
+    <element name="var">
+      <zeroOrMore>
+        <ref name="js.VariableDeclaration"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.VariableDeclarationList">
+    <zeroOrMore>
+      <ref name="js.VariableDeclaration"/>
+    </zeroOrMore>
+  </define>
+  <define name="js.VariableDeclaration">
+    <choice>
+      <ref name="js.ci"/>
+      <element name="di">
+        <ref name="js.ci"/>
+        <optional>
+          <ref name="js.AssignmentExpression"/>
+        </optional>
+      </element>
+    </choice>
+  </define>
+  <!--
+    	<var>
+    		<ci>
+    		<di>
+    			<ci>
+    			value
+  -->
+  <define name="js.IfElseElement">
+    <element name="if">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.IfElseExpression">
+    <element name="apply">
+      <ref name="js.IfElement"/>
+      <ref name="js.ExpressionElement"/>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.IfElement">
+    <element name="cond">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.IfStatement">
+    <element name="cond">
+      <ref name="js.IfElseElement"/>
+      <zeroOrMore>
+        <ref name="js.CaseClause"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="js.DefaultClause"/>
+      </optional>
+    </element>
+  </define>
+  <define name="js.WhileElement">
+    <element name="while">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.DoWhileElement">
+    <element name="dowhile">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ForEachElement">
+    <element name="foreach">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ForElement">
+    <element name="for">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.WhileStatement">
+    <element name="apply">
+      <ref name="js.WhileElement"/>
+      <ref name="js.ExpressionElement"/>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.DoWhileStatement">
+    <element name="apply">
+      <ref name="js.DoWhileElement"/>
+      <ref name="js.ExpressionElement"/>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.ForEachStatement">
+    <element name="apply">
+      <ref name="js.ForEachElement"/>
+      <element name="list">
+        <ref name="js.ExpressionElement"/>
+        <ref name="js.ExpressionElement"/>
+      </element>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.ForStatement">
+    <element name="apply">
+      <ref name="js.ForElement"/>
+      <element name="list">
+        <ref name="js.ExpressionElement"/>
+        <ref name="js.ExpressionElement"/>
+        <ref name="js.ExpressionElement"/>
+      </element>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.IterationStatement">
+    <choice>
+      <ref name="js.DoWhileStatement"/>
+      <ref name="js.WhileStatement"/>
+      <ref name="js.ForStatement"/>
+      <ref name="js.ForEachStatement"/>
+    </choice>
+  </define>
+  <define name="js.ContinueElement">
+    <element name="continue">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ContinueStatement">
+    <element name="apply">
+      <ref name="js.ContinueElement"/>
+      <optional>
+        <ref name="js.ci"/>
+      </optional>
+    </element>
+  </define>
+  <define name="js.BreakElement">
+    <element name="break">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.BreakStatement">
+    <element name="apply">
+      <ref name="js.BreakElement"/>
+      <optional>
+        <ref name="js.ci"/>
+      </optional>
+    </element>
+  </define>
+  <define name="js.ReturnElement">
+    <element name="return">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ReturnStatement">
+    <element name="apply">
+      <ref name="js.ReturnElement"/>
+      <optional>
+        <ref name="js.Expression"/>
+      </optional>
+    </element>
+  </define>
+  <define name="js.WithElement">
+    <element name="with">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.WithStatement">
+    <element name="apply">
+      <ref name="js.WithElement"/>
+      <ref name="js.ExpressionElement"/>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.SwitchElement">
+    <element name="case">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.SwitchStatement">
+    <element name="apply">
+      <ref name="js.SwitchElement"/>
+      <ref name="js.ExpressionElement"/>
+      <zeroOrMore>
+        <ref name="js.CaseClause"/>
+      </zeroOrMore>
+      <optional>
+        <ref name="js.DefaultClause"/>
+      </optional>
+    </element>
+  </define>
+  <define name="js.CaseClause">
+    <element name="di">
+      <ref name="js.ExpressionElement"/>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.DefaultClause">
+    <element name="else">
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.LabelledStatement">
+    <element name="label">
+      <ref name="js.ci"/>
+    </element>
+  </define>
+  <define name="js.ThrowElement">
+    <element name="throw">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.ThrowStatement">
+    <element name="apply">
+      <ref name="js.ThrowElement"/>
+      <ref name="js.Expression"/>
+    </element>
+  </define>
+  <define name="js.TryElement">
+    <element name="try">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.TryStatement">
+    <element name="apply">
+      <ref name="js.TryElement"/>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+      <choice>
+        <ref name="js.CatchClause"/>
+        <ref name="js.FinallyClause"/>
+        <group>
+          <ref name="js.CatchClause"/>
+          <ref name="js.FinallyClause"/>
+        </group>
+      </choice>
+    </element>
+  </define>
+  <define name="js.CatchClause">
+    <element name="di">
+      <ref name="js.ci"/>
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.FinallyClause">
+    <element name="else">
+      <zeroOrMore>
+        <ref name="js.Statement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.DebuggerElement">
+    <element name="debugger">
+      <empty/>
+    </element>
+  </define>
+  <define name="js.DebuggerStatement">
+    <element name="apply">
+      <ref name="js.DebuggerElement"/>
+    </element>
+  </define>
+  <define name="js.FunctionDeclaration">
+    <a:documentation>
+A.5 Functions and Programs
+</a:documentation>
+    <element name="function">
+      <ref name="js.ci"/>
+      <ref name="js.FormalParameterList"/>
+      <zeroOrMore>
+        <ref name="js.SourceElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.LambdaExpression">
+    <element name="lambda">
+      <ref name="js.FormalParameterList"/>
+      <zeroOrMore>
+        <ref name="js.SourceElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.FormalParameterList">
+    <zeroOrMore>
+      <element name="bvar">
+        <ref name="js.ci"/>
+      </element>
+    </zeroOrMore>
+  </define>
+  <define name="js.FunctionExpression">
+    <choice>
+      <ref name="js.FunctionDeclaration"/>
+      <ref name="js.LambdaExpression"/>
+    </choice>
+  </define>
+  <define name="js.Program">
+    <element name="script">
+      <zeroOrMore>
+        <ref name="js.SourceElement"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="js.SourceElement">
+    <choice>
+      <ref name="js.Statement"/>
+      <ref name="js.FunctionDeclaration"/>
+    </choice>
+  </define>
+</grammar>

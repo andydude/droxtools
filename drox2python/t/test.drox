@@ -1,0 +1,8 @@
+<drox:dl xmlns:drox="http://drosoft.org/ns/drosera" xmlns:py="http://drosoft.org/ns/drosera/pythonxml" xmlns:m="http://www.w3.org/1998/Math/MathML">
+  <m:csymbol cd="python2">module</m:csymbol>
+  <m:apply>
+    <m:csymbol cd="python2">import_from</m:csymbol>
+    <m:ci>__future__</m:ci>
+    <m:ci>print_function</m:ci>
+  </m:apply>
+</drox:dl>
