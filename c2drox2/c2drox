@@ -1,0 +1,10 @@
+#!/bin/bash
+CC="gcc"
+CPP="gcc -E"
+MAIN="perl6 -Ilib main.pl6"
+
+if [ x"$1" = x"-r" ]; then
+   ${CPP} $2 | grep -v '^#' | ${MAIN} -
+else
+   ${CPP} $1 | grep -v '^#' | ${MAIN} - | xmllint --format -
+fi
