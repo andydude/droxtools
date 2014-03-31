@@ -34,12 +34,52 @@ func (c *Compiler) emitAppEnd() {
 	c.emitElemEnd("m", "apply")
 }
 
+func (c *Compiler) emitStmt() {
+	c.emitElem("drox", "sl")
+}
+
+func (c *Compiler) emitStmtEnd() {
+	c.emitElemEnd("drox", "sl")
+}
+
+func (c *Compiler) emitStmtTerm() {
+	c.emitElem("drox", "st")
+}
+
+func (c *Compiler) emitStmtTermEnd() {
+	c.emitElemEnd("drox", "st")
+}
+
+func (c *Compiler) emitStmtItem() {
+	c.emitElem("drox", "si")
+}
+
+func (c *Compiler) emitStmtItemEnd() {
+	c.emitElemEnd("drox", "si")
+}
+
+func (c *Compiler) emitStmtElse() {
+	c.emitElem("drox", "sd")
+}
+
+func (c *Compiler) emitStmtElseEnd() {
+	c.emitElemEnd("drox", "sd")
+}
+
 func (c *Compiler) emitDecl() {
 	c.emitElem("drox", "dl")
 }
 
 func (c *Compiler) emitDeclEnd() {
 	c.emitElemEnd("drox", "dl")
+}
+
+func (c *Compiler) emitDeclTerm() {
+	c.emitElem("drox", "dt")
+}
+
+func (c *Compiler) emitDeclTermEnd() {
+	c.emitElemEnd("drox", "dt")
 }
 
 func (c *Compiler) emitDeclItem() {
@@ -50,12 +90,12 @@ func (c *Compiler) emitDeclItemEnd() {
 	c.emitElemEnd("drox", "di")
 }
 
-func (c *Compiler) emitDeclTerm() {
-	c.emitElem("drox", "dt")
+func (c *Compiler) emitDeclElse() {
+	c.emitElem("drox", "dd")
 }
 
-func (c *Compiler) emitDeclTermEnd() {
-	c.emitElemEnd("drox", "dt")
+func (c *Compiler) emitDeclElseEnd() {
+	c.emitElemEnd("drox", "dd")
 }
 
 func (c *Compiler) emitArrayType(node *ast.ArrayType) {
@@ -839,35 +879,40 @@ func (c *Compiler) emitStmt(node ast.Stmt) {
 }
 
 func (c *Compiler) emitStructType(node *ast.StructType) {
-	c.emit("<m:apply><go:struct/>")
+	c.emitApp()
+	c.emit("<go:struct/>")
 	c.emitFieldList(node.Fields)
 	c.emitAppEnd()
 }
 
 func (c *Compiler) emitSwitchStmt(node *ast.SwitchStmt) {
-	cond := node.Tag == nil
-	if cond {
-		c.emit("<m:apply><go:cond")
-	} else {
-		c.emit("<m:apply><go:case")
-	}
-	if node.Init != nil {
-		c.emit("-init")
-		c.emitStmt(node.Init)
-	}
-	c.emit("/>")
-	if !cond {
+	c.emitApp()
+	if node.Tag != nil {
+		if node.Init != nil {
+			c.emitSym("switch2", "do_case")
+			c.emitStmt(node.Init)
+		} else {
+			c.emitSym("switch2", "do_cond")
+		}
 		c.emit("\n")
 		c.emitExpr(node.Tag)
+	} else {
+		if node.Init != nil {
+			c.emitSym("switch2", "case")
+			c.emitStmt(node.Init)
+		} else {
+			c.emitSym("switch2", "cond")
+		}
 	}
 	for _, stmt := range node.Body.List {
 		c.emit("\n")
-		c.emitCaseClause(stmt.(*ast.CaseClause), cond)
+		c.emitCaseClause(stmt.(*ast.CaseClause), node.Tag == nil)
 	}
 	c.emitAppEnd()
 }
 
 func (c *Compiler) emitType(node ast.Expr) {
+	// TODO
 	if typeid, ok := node.(*ast.Ident); ok {
 		c.emitIdent(typeid)
 		//c.emitRaw(goIdToXmlId(id.Name))
@@ -878,7 +923,8 @@ func (c *Compiler) emitType(node ast.Expr) {
 }
 
 func (c *Compiler) emitTypeAssertExpr(node *ast.TypeAssertExpr) {
-	c.emit("<m:apply><go:as/> ")
+	c.emitApp()
+	c.emit("<go:as/> ")
 	c.emitExpr(node.X)
 	c.emit("\n")
 	if node.Type == nil {
@@ -896,7 +942,8 @@ func (c *Compiler) emitTypeSpec(node *ast.TypeSpec) {
 }
 
 func (c *Compiler) emitTypeSwitchStmt(node *ast.TypeSwitchStmt) {
-	c.emit("<m:apply><go:type-case/>")
+	c.emitApp()
+	c.emit("<go:type-case/>")
 	if node.Init != nil {
 		c.emit("* ")
 		c.emitStmt(node.Init)

@@ -1,0 +1,19 @@
+{
+    "name": "droxi",
+    "version": "0.9",
+    "author": "Andrew Robbins",
+    "author_email": "and_j_rob@yahoo.com",
+    "url": "http://github.com/andydude/droxtools",
+    "download_url": "http://github.com/andydude/droxtools",
+    "description": "Drosera Object XML Interpreter.",
+
+    "packages": [
+        "drox",
+        "droxi"
+    ],
+    
+    "install_requires": [
+    	"lxml",
+    	"six"
+    ]
+}

@@ -1,0 +1,272 @@
+default namespace py = "http://drosoft.org/ns/drosera/python"
+namespace drox = "http://drosoft.org/ns/drosera"
+namespace m = "http://www.w3.org/1998/Math/MathML"
+
+start = py.module
+
+py.one.symbol		= element m:csymbol { attribute cd { "alg1" }, "one" }
+py.zero.symbol		= element m:csymbol { attribute cd { "alg1" }, "zero" }
+py.abs.symbol		= element m:csymbol { attribute cd { "arith1" }, "abs" }
+py.minus.symbol		= element m:csymbol { attribute cd { "arith1" }, "minus" }
+py.power.symbol		= element m:csymbol { attribute cd { "arith1" }, "power" }
+py.times.symbol		= element m:csymbol { attribute cd { "arith1" }, "times" }
+py.uminus.symbol	= element m:csymbol { attribute cd { "arith1" }, "unary_minus" }
+py.uplus.symbol		= element m:csymbol { attribute cd { "arith4" }, "unary_plus" }
+py.plus.symbol		= element m:csymbol { attribute cd { "arith4" }, "plus" }
+py.and.symbol		= element m:csymbol { attribute cd { "bitwise1" }, "and" }
+py.not.symbol		= element m:csymbol { attribute cd { "bitwise1" }, "not" }
+py.or.symbol		= element m:csymbol { attribute cd { "bitwise1" }, "or" }
+py.xor.symbol		= element m:csymbol { attribute cd { "bitwise1" }, "xor" }
+py.rshift.symbol	= element m:csymbol { attribute cd { "bitwise3" }, "arithmetic_right_shift" }
+py.lshift.symbol	= element m:csymbol { attribute cd { "bitwise3" }, "left_shift" }
+py.ord.symbol		= element m:csymbol { attribute cd { "char1" }, "character_to_integer" }
+py.chr.symbol		= element m:csymbol { attribute cd { "char1" }, "integer_to_character" }
+py.float.symbol		= element m:csymbol { attribute cd { "float64" }, "to_float64" }
+py.lambda.symbol	= element m:csymbol { attribute cd { "fns1" }, "lambda" }
+py.apply.symbol		= element m:csymbol { attribute cd { "fns2" }, "apply_to_list" }
+py.exists.symbol	= element m:csymbol { attribute cd { "iter1" }, "exists_true" }
+py.filter.symbol	= element m:csymbol { attribute cd { "iter1" }, "filter" }
+py.forall.symbol	= element m:csymbol { attribute cd { "iter1" }, "forall_true" }
+py.map.symbol		= element m:csymbol { attribute cd { "iter1" }, "map" }
+py.reduce.symbol	= element m:csymbol { attribute cd { "iter1" }, "reduce" }
+py.sum.symbol		= element m:csymbol { attribute cd { "iter1" }, "sum" }
+py.zip.symbol		= element m:csymbol { attribute cd { "iter1" }, "zip" }
+py.list.symbol		= element m:csymbol { attribute cd { "python2" }, "to_list" }
+py.and.symbol		= element m:csymbol { attribute cd { "logic1" }, "and" }
+py.false.symbol		= element m:csymbol { attribute cd { "logic1" }, "false" }
+py.not.symbol		= element m:csymbol { attribute cd { "logic1" }, "not" }
+py.or.symbol		= element m:csymbol { attribute cd { "logic1" }, "or" }
+py.true.symbol		= element m:csymbol { attribute cd { "logic1" }, "true" }
+py.assign.symbol	= element m:csymbol { attribute cd { "prog1" }, "assignment" }
+py.global.symbol	= element m:csymbol { attribute cd { "prog1" }, "global_var" }
+py.return.symbol	= element m:csymbol { attribute cd { "prog1" }, "return" }
+py.while.symbol		= element m:csymbol { attribute cd { "prog1" }, "while" }
+py.bool.symbol		= element m:csymbol { attribute cd { "python2" }, "to_boolean" }
+py.max.symbol		= element m:csymbol { attribute cd { "minmax1" }, "max" }
+py.min.symbol		= element m:csymbol { attribute cd { "minmax1" }, "min" }
+py.assert.symbol	= element m:csymbol { attribute cd { "prog2" }, "assert" }
+py.augassign.symbol	= element m:csymbol { attribute cd { "prog2" }, "assignment_operator" }
+py.break.symbol		= element m:csymbol { attribute cd { "prog2" }, "break" }
+py.continue.symbol	= element m:csymbol { attribute cd { "prog2" }, "continue" }
+py.delete.symbol	= element m:csymbol { attribute cd { "prog2" }, "delete" }
+py.else.symbol		= element m:csymbol { attribute cd { "prog2" }, "else" }
+py.pass.symbol		= element m:csymbol { attribute cd { "prog2" }, "empty" }
+py.for_each.symbol	= element m:csymbol { attribute cd { "prog2" }, "for_each" }
+py.if.symbol		= element m:csymbol { attribute cd { "prog2" }, "if" }
+py.if_exp.symbol	= element m:csymbol { attribute cd { "prog2" }, "if_exp" }
+py.dot.symbol		= element m:csymbol { attribute cd { "prog2" }, "namespace_selector" }
+py.null.symbol		= element m:csymbol { attribute cd { "prog2" }, "null" }
+py.raise.symbol		= element m:csymbol { attribute cd { "prog2" }, "throw" }
+py.yield.symbol		= element m:csymbol { attribute cd { "prog3" }, "yield" }
+py.args.symbol		= element m:csymbol { attribute cd { "python2" }, "args" }
+py.as.symbol		= element m:csymbol { attribute cd { "python2" }, "as" }
+py.aug_load.symbol	= element m:csymbol { attribute cd { "python2" }, "aug_load" }
+py.aug_store.symbol	= element m:csymbol { attribute cd { "python2" }, "aug_store" }
+py.basestring.symbol= element m:csymbol { attribute cd { "python2" }, "basestring" }
+py.bin.symbol		= element m:csymbol { attribute cd { "python2" }, "bin" }
+py.buffer.symbol	= element m:csymbol { attribute cd { "python2" }, "buffer" }
+py.callable.symbol	= element m:csymbol { attribute cd { "python2" }, "callable" }
+py.class.symbol		= element m:csymbol { attribute cd { "python2" }, "class" }
+py.classmeth.symbol	= element m:csymbol { attribute cd { "python2" }, "classmethod" }
+py.cmp.symbol		= element m:csymbol { attribute cd { "python2" }, "cmp" }
+py.coerce.symbol	= element m:csymbol { attribute cd { "python2" }, "coerce" }
+py.compare.symbol	= element m:csymbol { attribute cd { "python2" }, "compare" }
+py.compile.symbol	= element m:csymbol { attribute cd { "python2" }, "compile" }
+py.def.symbol		= element m:csymbol { attribute cd { "python2" }, "def" }
+py.del.symbol		= element m:csymbol { attribute cd { "python2" }, "del" }
+py.delattr.symbol	= element m:csymbol { attribute cd { "python2" }, "delattr" }
+py.dict.symbol		= element m:csymbol { attribute cd { "python2" }, "dict" }
+py.dict_comp.symbol	= element m:csymbol { attribute cd { "python2" }, "dict_comp" }
+py.dir.symbol		= element m:csymbol { attribute cd { "python2" }, "dir" }
+py.divide.symbol	= element m:csymbol { attribute cd { "python2" }, "divide" }
+py.divmod.symbol	= element m:csymbol { attribute cd { "python2" }, "divmod" }
+py.ellipsis.symbol	= element m:csymbol { attribute cd { "python2" }, "ellipsis" }
+py.enumerate.symbol	= element m:csymbol { attribute cd { "python2" }, "enumerate" }
+py.eval.symbol		= element m:csymbol { attribute cd { "python2" }, "eval" }
+py.exec.symbol		= element m:csymbol { attribute cd { "python2" }, "exec" }
+py.execfile.symbol	= element m:csymbol { attribute cd { "python2" }, "execfile" }
+py.file.symbol		= element m:csymbol { attribute cd { "python2" }, "file" }
+py.format.symbol	= element m:csymbol { attribute cd { "python2" }, "format" }
+py.generator.symbol	= element m:csymbol { attribute cd { "python2" }, "generator" }
+py.getattr.symbol	= element m:csymbol { attribute cd { "python2" }, "getattr" }
+py.globals.symbol	= element m:csymbol { attribute cd { "python2" }, "globals" }
+py.hasattr.symbol	= element m:csymbol { attribute cd { "python2" }, "hasattr" }
+py.hash.symbol		= element m:csymbol { attribute cd { "python2" }, "hash" }
+py.help.symbol		= element m:csymbol { attribute cd { "python2" }, "help" }
+py.hex.symbol		= element m:csymbol { attribute cd { "python2" }, "hex" }
+py.id.symbol		= element m:csymbol { attribute cd { "python2" }, "id" }
+py.import.symbol	= element m:csymbol { attribute cd { "python2" }, "import" }
+py.importfrom.symbol= element m:csymbol { attribute cd { "python2" }, "import_from" }
+py.input.symbol		= element m:csymbol { attribute cd { "python2" }, "input" }
+py.int.symbol		= element m:csymbol { attribute cd { "python2" }, "int" }
+py.intern.symbol	= element m:csymbol { attribute cd { "python2" }, "intern" }
+py.is.symbol		= element m:csymbol { attribute cd { "python2" }, "is" }
+py.isinstance.symbol= element m:csymbol { attribute cd { "python2" }, "isinstance" }
+py.isnot.symbol		= element m:csymbol { attribute cd { "python2" }, "isnot" }
+py.issubclass.symbol= element m:csymbol { attribute cd { "python2" }, "issubclass" }
+py.iter.symbol		= element m:csymbol { attribute cd { "python2" }, "iter" }
+py.kwargs.symbol	= element m:csymbol { attribute cd { "python2" }, "kwargs" }
+py.len.symbol		= element m:csymbol { attribute cd { "python2" }, "len" }
+py.list.symbol		= element m:csymbol { attribute cd { "python2" }, "list" }
+py.list_comp.symbol	= element m:csymbol { attribute cd { "python2" }, "list_comp" }
+py.load.symbol		= element m:csymbol { attribute cd { "python2" }, "load" }
+py.locals.symbol	= element m:csymbol { attribute cd { "python2" }, "locals" }
+py.long.symbol		= element m:csymbol { attribute cd { "python2" }, "long" }
+py.memoryview.symbol= element m:csymbol { attribute cd { "python2" }, "memoryview" }
+py.module.symbol	= element m:csymbol { attribute cd { "python2" }, "module" }
+py.next.symbol		= element m:csymbol { attribute cd { "python2" }, "next" }
+py.object.symbol	= element m:csymbol { attribute cd { "python2" }, "object" }
+py.oct.symbol		= element m:csymbol { attribute cd { "python2" }, "oct" }
+py.open.symbol		= element m:csymbol { attribute cd { "python2" }, "open" }
+py.param.symbol		= element m:csymbol { attribute cd { "python2" }, "param" }
+py.print2.symbol	= element m:csymbol { attribute cd { "python2" }, "print" }
+py.property.symbol	= element m:csymbol { attribute cd { "python2" }, "property" }
+py.range.symbol		= element m:csymbol { attribute cd { "python2" }, "range" }
+py.raw_input.symbol	= element m:csymbol { attribute cd { "python2" }, "raw_input" }
+py.reload.symbol	= element m:csymbol { attribute cd { "python2" }, "reload" }
+py.repr.symbol		= element m:csymbol { attribute cd { "python2" }, "repr" }
+py.reversed.symbol	= element m:csymbol { attribute cd { "python2" }, "reversed" }
+py.selector.symbol	= element m:csymbol { attribute cd { "python2" }, "selector" }
+py.set.symbol		= element m:csymbol { attribute cd { "python2" }, "set" }
+py.set_comp.symbol	= element m:csymbol { attribute cd { "python2" }, "set_comp" }
+py.setattr.symbol	= element m:csymbol { attribute cd { "python2" }, "setattr" }
+py.slice.symbol		= element m:csymbol { attribute cd { "python2" }, "slice" }
+py.sorted.symbol	= element m:csymbol { attribute cd { "python2" }, "sorted" }
+py.staticmeth.symbol= element m:csymbol { attribute cd { "python2" }, "staticmethod" }
+py.store.symbol		= element m:csymbol { attribute cd { "python2" }, "store" }
+py.super.symbol		= element m:csymbol { attribute cd { "python2" }, "super" }
+py.tryexcept.symbol	= element m:csymbol { attribute cd { "python2" }, "try_except" }
+py.tryfinally.symbol= element m:csymbol { attribute cd { "python2" }, "try_finally" }
+py.tuple.symbol		= element m:csymbol { attribute cd { "python2" }, "tuple" }
+py.type.symbol		= element m:csymbol { attribute cd { "python2" }, "type" }
+py.unichr.symbol	= element m:csymbol { attribute cd { "python2" }, "unichr" }
+py.vars.symbol		= element m:csymbol { attribute cd { "python2" }, "vars" }
+py.xrange.symbol	= element m:csymbol { attribute cd { "python2" }, "xrange" }
+py.ascii.symbol		= element m:csymbol { attribute cd { "python3" }, "ascii" }
+py.exec.symbol		= element m:csymbol { attribute cd { "python3" }, "exec" }
+py.print3.symbol	= element m:csymbol { attribute cd { "python3" }, "print" }
+py.with.symbol		= element m:csymbol { attribute cd { "python3" }, "with" }
+py.eq.symbol		= element m:csymbol { attribute cd { "relation1" }, "eq" }
+py.geq.symbol		= element m:csymbol { attribute cd { "relation1" }, "geq" }
+py.gt.symbol		= element m:csymbol { attribute cd { "relation1" }, "gt" }
+py.leq.symbol		= element m:csymbol { attribute cd { "relation1" }, "leq" }
+py.lt.symbol		= element m:csymbol { attribute cd { "relation1" }, "lt" }
+py.neq.symbol		= element m:csymbol { attribute cd { "relation1" }, "neq" }
+py.round.symbol		= element m:csymbol { attribute cd { "rounding_rta" }, "round" }
+py.quotient.symbol	= element m:csymbol { attribute cd { "rounding_rtn" }, "quotient" }
+py.remainder.symbol	= element m:csymbol { attribute cd { "rounding_rtn" }, "remainder" }
+py.in.symbol		= element m:csymbol { attribute cd { "set1" }, "in" }
+py.notin.symbol		= element m:csymbol { attribute cd { "set1" }, "notin" }
+py.cond.symbol		= element m:csymbol { attribute cd { "switch2" }, "cond" }
+
+
+py.module = element drox:dl {
+   py.module.symbol,
+   py.stmt*
+}
+
+py.stmt
+	= py.simple_stmt
+    | py.compound_stmt
+
+py.simple_stmt
+	= py.expr_stmt
+    | py.print_stmt  
+    | py.del_stmt 
+    | py.pass_stmt 
+    | py.flow_stmt 
+    | py.import_stmt 
+    | py.global_stmt 
+    | py.exec_stmt 
+    | py.assert_stmt
+
+py.compound_stmt
+	= py.if_stmt 
+    | py.while_stmt 
+    | py.for_stmt 
+    | py.try_stmt 
+    | py.with_stmt 
+    | py.funcdef 
+    | py.classdef 
+    | py.decorated
+
+py.flow_stmt
+	= py.break_stmt 
+    | py.continue_stmt 
+    | py.return_stmt 
+    | py.raise_stmt 
+    | py.yield_stmt
+
+py.expr_stmt = py.expr
+
+py.print_stmt = element drox:sl {
+	py.print2.symbol,
+    py.expr,
+    py.expr*,
+    py.expr
+}
+
+py.del_stmt = element m:apply {
+	py.del.symbol,
+    py.exprlist
+}
+
+py.pass_stmt = py.pass.symbol
+
+py.import_stmt
+	= py.import_name
+    | py.import_from
+
+py.import_name = element drox:dl {
+}
+
+py.import_from = element drox:dl {
+}
+
+py.global_stmt =  element drox:dl {}
+py.exec_stmt = element drox:dl {}
+py.assert_stmt = element drox:dl {}
+py.if_stmt = element drox:dl {}
+py.while_stmt = element drox:dl {}
+py.for_stmt = element drox:dl {}
+py.try_stmt = element drox:dl {}
+py.with_stmt = element drox:dl {}
+
+   
+py.funcdef = element drox:dl {
+	py.decorator_list,
+    py.def.symbol,
+    element drox:dt {
+		m.ci
+    },
+    element m:bvar {
+       any
+    }*,
+    py.stmt+
+}
+
+   
+py.classdef = element drox:dl {
+	py.decorator_list,
+    py.class.symbol,
+    element drox:dt {
+		m.ci,
+        element py:base {
+            m.ci*
+        }?,
+        element py:keyword {
+             m.ci*
+        }?
+    },
+    element m:bvar {
+       any
+    }*,
+    py.stmt+
+}
+
+py.decorated =
+py.break_stmt =
+py.continue_stmt =
+py.return_stmt =
+py.raise_stmt =
+py.yield_stmt =
