@@ -177,7 +177,7 @@ method enumeration-constant($/) {
 
 method character-constant:sym<quote>($/) {
     make '<m:cs type="character">'
-       ~ (map {$_.Str}, $<c-char-sequence>).join
+       ~ (map {$_.Str}, @<c-char-sequence>).join
        ~ '</m:cs>';
 }
 
@@ -195,7 +195,7 @@ method character-constant:sym<U>($/) {
 
 method string-literal:sym<quote>($/) {
     make '<m:cs>'
-       ~ (map {$_.Str}, $<s-char-sequence>).join
+       ~ (map {$_.Str}, @<s-char-sequence>).join
        ~ '</m:cs>';
 }
 
@@ -251,7 +251,7 @@ method generic-selection($/) {
        ~ $SL_ETAG;
 }
 method generic-assoc-list($/) {
-    make (map {$_.ast}, $<generic-association>).join
+    make (map {$_.ast}, @<generic-association>).join
 }
 method generic-association:sym<typename>($/) {
     make $SI_STAG
@@ -303,7 +303,7 @@ method postfix-expression-rest:sym<( )> ($/) {
     # We don't need an applier, since our caller has it. 
     # We return the empty string, so when it is 
     # concatenated, our caller skips it.
-    make ['', (map {$_.ast}, $<argument-expression-list>).join];
+    make ['', (map {$_.ast}, @<argument-expression-list>).join];
 }
 
 method postfix-expression-rest:sym<.>($/) {
@@ -325,7 +325,7 @@ method postfix-expression-rest:sym<-->($/) {
 }
 
 method argument-expression-list($/) {
-    make (map {$_.ast}, $<assignment-expression>).join;
+    make (map {$_.ast}, @<assignment-expression>).join;
 }
 
 method unary-expression:sym<postfix>($/) {
@@ -571,7 +571,7 @@ method assignment-operator:sym<|=>($/) {
 }
 
 method expression($/) {
-    make (map {$_.ast}, $<assignment-expression>).join;
+    make (map {$_.ast}, @<assignment-expression>).join;
 }
 
 method constant-expression($/) {
@@ -641,7 +641,7 @@ method declaration:sym<declaration>($/) {
         $str ~= '<c89:type_definition/>';
 
         {
-            my $types = map {$_.ast}, $<declaration-specifiers><declaration-specifier>[1..*-2];
+            my $types = map {$_.ast}, @<declaration-specifiers><declaration-specifier>[1..*-2];
             my $name = $<declaration-specifiers><declaration-specifier>[*-1].ast;
 
             $str ~= $DT_STAG
@@ -657,10 +657,10 @@ method declaration:sym<declaration>($/) {
         our $str = $DL_STAG;
         $str ~= '<prog1:local_var/>';
 
-        if $<init-declarator-list>.elems == 1 {
+        if $<init-declarator-list> {
             $str ~= $DT_STAG;
 
-            my $obj = $<init-declarator-list>[0]<init-declarator>[0].ast;
+            my $obj = @<init-declarator-list>[0]<init-declarator>[0].ast;
             my $types = $<declaration-specifiers>.ast;
             
             $str ~= $obj{'name'};
@@ -684,8 +684,6 @@ method declaration:sym<declaration>($/) {
             }
 
             $str ~= $DT_ETAG;
-        } else {
-            $str ~= 'WHAT';
         }
 
         $str ~= $DL_ETAG;
@@ -700,7 +698,7 @@ method declaration:sym<static_assert>($/) {
 }
 
 method declaration-specifiers($/) {
-    make (map {$_.ast}, $<declaration-specifier>)
+    make (map {$_.ast}, @<declaration-specifier>)
 }
 
 method declaration-specifier:sym<storage-class>($/) {
@@ -724,14 +722,14 @@ method declaration-specifier:sym<alignment>($/) {
 }
 
 method init-declarator-list($/) {
-    make (map {$_.ast}, $<init-declarator>);
+    make (map {$_.ast}, @<init-declarator>);
 }
 
 method init-declarator($/) {
     my $obj = $<declarator>.ast;
     my $init = False;
-    if $<initializer> {
-        $obj{'init'} = $<initializer>[0].ast;
+    if @<initializer> {
+        $obj{'init'} = @<initializer>[0].ast;
     }
     make $obj;
 }
@@ -907,7 +905,7 @@ method enum-specifier:sym<spec>($/) {
 }
 
 method enumerator-list($/) {
-    make (map {$_.ast}, $<enumerator>).join;
+    make (map {$_.ast}, @<enumerator>).join;
 }
 
 method enumerator($/) {
@@ -964,7 +962,7 @@ method alignment-specifier:sym<constant>($/) {
 
 method declarator:sym<direct>($/) {
     my $obj = $<direct-declarator>.ast;
-    my @ptr = map {$_.ast}, $<pointer>;
+    my @ptr = map {$_.ast}, @<pointer>;
 	make {
 		name => $obj{'name'},
 		type => @ptr.push($obj{'type'}),
@@ -974,7 +972,7 @@ method declarator:sym<direct>($/) {
 
 method direct-declarator($/) {
     my $obj = $<direct-declarator-first>.ast;
-    my @rest = map {$_.ast}, $<direct-declarator-rest>;
+    my @rest = map {$_.ast}, @<direct-declarator-rest>;
     make {
         name => $obj{'name'},
         type => $obj{'type'},
@@ -1015,19 +1013,19 @@ method direct-declarator-rest:sym<p-parameter-type-list>($/) {
 }
 
 method direct-declarator-rest:sym<p-identifier-list>($/) {
-    make (map {$_.ast}, $<identifier-list>).join;
+    make (map {$_.ast}, @<identifier-list>).join;
 }
 
 method pointer:sym<pointer>($/) {
     if $<type-qualifier-list> {
-        make '<c89:pointer/>' ~ (map {$_.ast}, $<type-qualifier-list>).join;
+        make '<c89:pointer/>' ~ (map {$_.ast}, @<type-qualifier-list>).join;
     } else {
         make '<c89:pointer/>';
     }
 }
 
 method type-qualifier-list($/) {
-    make (map {$_.ast}, $<type-qualifier>).join;
+    make (map {$_.ast}, @<type-qualifier>).join;
 }
 
 method parameter-type-list:sym<end>($/) {
@@ -1042,7 +1040,7 @@ method parameter-type-list:sym<...>($/) {
 }
 
 method parameter-list($/) {
-    make (map {$_.ast}, $<parameter-declaration>).join;
+    make (map {$_.ast}, @<parameter-declaration>).join;
 }
 
 method parameter-declaration:sym<declarator>($/) {
@@ -1051,7 +1049,7 @@ method parameter-declaration:sym<declarator>($/) {
     my $str = $BV_STAG;
     $str ~= $obj{'name'};
 
-    if $obj{'type'}:exist {
+    if $obj{'type'} {
         $types.push($obj{'type'});
     }
 
@@ -1059,7 +1057,7 @@ method parameter-declaration:sym<declarator>($/) {
           ~ $types.join
           ~ '</drox:btype>';
 
-    if $obj{'rest'}:exist {
+    if $obj{'rest'} {
         $str ~= '<drox:brest>'
               ~ $obj{'rest'}
               ~ '</drox:brest>';
@@ -1120,7 +1118,7 @@ method initializer:sym<initializer-list>($/) {
 
 method initializer-list($/) {
     make '<m:list>'
-        ~ (map {$_.ast}, $<designation-initializer>).join
+        ~ (map {$_.ast}, @<designation-initializer>).join
         ~ '</m:list>';
 }
 
@@ -1187,14 +1185,14 @@ method labeled-statement:sym<default>($/) {
 
 method compound-statement($/) {
     if $<block-item-list> {
-        make (map {$_.ast}, $<block-item-list>).join;
+        make (map {$_.ast}, @<block-item-list>).join;
     } else {
         make '<prog2:empty/>';
     }
 }
 
 method block-item-list($/) {
-    make (map {$_.ast}, $<block-item>).join;
+    make (map {$_.ast}, @<block-item>).join;
 }
 
 method block-item:sym<declaration>($/) {
@@ -1206,8 +1204,9 @@ method block-item:sym<statement>($/) {
 }
 
 method expression-statement($/) {
-    if $<expression> {
-        make $<expression>[0].ast;
+    say $/.perl;
+    if @<expression> {
+        make @<expression>[0].ast;
     } else {
         make '<prog2:empty/>';
     }
@@ -1253,7 +1252,7 @@ method jump-statement:sym<break>($/) {
 method jump-statement:sym<return>($/) {
     make $SL_STAG
        ~ '<prog1:return/>'
-       ~ (map {$_.ast}, $<expression>).join
+       ~ (map {$_.ast}, @<expression>).join
        ~ $SL_ETAG;
 }
 
@@ -1297,12 +1296,12 @@ method function-definition:sym<modern>($/) {
 #}
 
 method declaration-list($/) {
-    make (map {$_.ast}, $<declaration>).join;
+    make (map {$_.ast}, @<declaration>).join;
 }
 
 method translation-unit($/) {
     make $DL_ROOT
        ~ '<c89:translation_unit/>'
-       ~ (map {$_.ast}, $<external-declaration>).join
+       ~ (map {$_.ast}, @<external-declaration>).join
        ~ $DL_ETAG;
 }

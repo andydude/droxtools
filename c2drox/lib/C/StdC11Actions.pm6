@@ -46,8 +46,7 @@ method generic-association:sym<default>($/) {
 }
 
 method postfix-expression($/) {
-    <postfix-expression-first>
-    <postfix-expression-rest>*
+    make ""
 }
 
 method postfix-expression-first:sym<primary>($/) {
@@ -55,20 +54,30 @@ method postfix-expression-first:sym<primary>($/) {
 }
 
 method postfix-expression-first:sym<initializer>($/) {
-    make Initializer.new(
-        expr => 
-        );
-    '(' <type-name> ')'
-    '{' (<initializer-list> ','?) '}' 
+    make ""
+#Initializer.new(
+#        expr => 
+#        );
+#    '(' <type-name> ')'
+#    '{' (<initializer-list> ','?) '}' 
 }
 
 method postfix-expression-rest:sym<[ ]>($/) {
-    '[' <expression> ']'
+    make ""
 }
 method postfix-expression-rest:sym<( )>($/) {
-    '(' <argument-expression-list>? ')'
+    make ""
 }
-method postfix-expression-rest:sym<.>($/)   { <sym> <ident> }
-method postfix-expression-rest:sym«->»($/)  { <sym> <ident> }
-method postfix-expression-rest:sym<++>($/)  { <sym> }
-method postfix-expression-rest:sym<-->($/)  { <sym> }
+
+method postfix-expression-rest:sym<.>($/)   {
+    make ""
+}
+method postfix-expression-rest:sym«->»($/)  {
+    make ""
+}
+method postfix-expression-rest:sym<++>($/)  {
+    make ""
+}
+method postfix-expression-rest:sym<-->($/)  {
+    make ""
+}

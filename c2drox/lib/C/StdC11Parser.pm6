@@ -219,7 +219,7 @@ rule assignment-operator:sym<|=>  { <sym> }
 
 # SS 6.5.17
 rule expression {
-     <assignment-expression> (',' <assignment-expression>)*
+     <assignment-expression> [',' <assignment-expression>]*
 }
 
 # SS 6.6
