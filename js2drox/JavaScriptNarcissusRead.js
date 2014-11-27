@@ -2,14 +2,14 @@ function emitId(name) {
     // TODO: add parameter to force symbol, ci
 
     switch (name) {
-    case 'NaN': 	emitSym('nums1', 'NaN'); break;
+    case 'NaN': 		emitSym('nums1', 'NaN'); break;
     case 'Infinity': 	emitSym('nums1', 'infinity'); break;
     case 'undefined': 	emitSym('ecmascript3', 'undefined'); break;
     case 'arguments': 	emitSym('ecmascript3', 'arguments'); break;
-    case 'eval': 	emitSym('ecmascript3', 'eval'); break;
+    case 'eval': 		emitSym('ecmascript3', 'eval'); break;
     case 'parseInt': 	emitSym('ecmascript3', 'parseInt'); break;
     case 'parseFloat':  emitSym('ecmascript3', 'parseFloat'); break;
-    case 'isNaN': 	emitSym('ecmascript3', 'isNaN'); break;
+    case 'isNaN': 		emitSym('ecmascript3', 'isNaN'); break;
     case 'isFinite': 	emitSym('ecmascript3', 'isFinite'); break;
     case 'decodeURI': 	emitSym('ecmascript3', 'decodeURI'); break;
     case 'decodeURIComponent': emitSym('ecmascript3', 'decodeURIComponent'); break;
@@ -112,6 +112,38 @@ function emitBindEnd() {
     emitElemEnd('m', 'bind');
 }
 
+function emitStmt() {
+    emitElem('drox', 'sl');
+}
+
+function emitStmtEnd() {
+    emitElemEnd('drox', 'sl');
+}
+
+function emitStmtItem() {
+    emitElem('drox', 'si');
+}
+
+function emitStmtItemEnd() {
+    emitElemEnd('drox', 'si');
+}
+
+function emitStmtTerm() {
+    emitElem('drox', 'st');
+}
+
+function emitStmtTermEnd() {
+    emitElemEnd('drox', 'st');
+}
+
+function emitStmtElse() {
+    emitElem('drox', 'sd');
+}
+
+function emitStmtElseEnd() {
+    emitElemEnd('drox', 'sd');
+}
+
 function emitDecl() {
     emitElem('drox', 'dl');
 }
@@ -134,6 +166,14 @@ function emitDeclTerm() {
 
 function emitDeclTermEnd() {
     emitElemEnd('drox', 'dt');
+}
+
+function emitDeclElse() {
+    emitElem('drox', 'dd');
+}
+
+function emitDeclElseEnd() {
+    emitElemEnd('drox', 'dd');
 }
 
 function emitScript() {
@@ -540,16 +580,16 @@ function compileNode(node, defs) {
         emitAppEnd();
         break;
     case defs.tokenIds['OBJECT_INIT']:
-        emitDecl();
+        emitApp();
         emitSym('ecmascript3', 'object');
         compileNodes(node.children, defs);
-        emitDeclEnd();
+        emitAppEnd();
         break;
     case defs.tokenIds['PROPERTY_INIT']:
         emitDeclItem();
-	emitDeclTerm();
+	    emitDeclTerm();
         compileNode(node.children[0], defs);
-	emitDeclTermEnd();
+	    emitDeclTermEnd();
         compileNodes(node.children.slice(1), defs);
         emitDeclItemEnd();
         break;
@@ -693,19 +733,19 @@ function compileNode(node, defs) {
         emitAppEnd();
         break;
     case defs.keywords['case']:
-        emitDeclItem();
-        emitDeclTerm();
+        emitStmtItem();
+        emitStmtTerm();
         compileNode(node.caseLabel, defs);
-        emitDeclTermEnd();
+        emitStmtTermEnd();
         compileBlockSeq(node.statements, defs);
-        emitDeclItemEnd();
+        emitStmtItemEnd();
         break;
     case defs.keywords['catch']:
-	emitDecl();
+	    emitBind();
         emitSym('prog2', 'catch');
-	compileParam(node.varName);
-	compileBlockSeq(node.block, defs);
-	emitDeclEnd();
+	    compileParam(node.varName);
+	    compileBlockSeq(node.block, defs);
+	    emitBindEnd();
         break;
     case defs.keywords['const']:
         emitDecl();
@@ -733,9 +773,11 @@ function compileNode(node, defs) {
         emitAppEnd();
         break;
     case defs.keywords['do']:
+        emitApp();
         emitSym('prog2', 'do_while');
         compileBody(node.body, defs);
         compileNode(node.condition, defs);
+        emitAppEnd();
         break;
     case defs.keywords['false']:
         emitSym('logic1', 'false');
@@ -775,24 +817,24 @@ function compileNode(node, defs) {
     case defs.keywords['if']:
         // TODO: add parameter to force if/cond
         if (node.elsePart && node.elsePart.type == defs.keywords['if']) {
-            emitDecl();
+            emitStmt();
             emitSym('switch2', 'cond');
             var mode;
             for (mode = node; 
                  mode && mode.type == defs.keywords['if']; 
                  mode = mode.elsePart || null) {
-                emitDeclItem();
-                emitDeclTerm();
+                emitStmtItem();
+                emitStmtTerm();
                 compileNode(mode.condition, defs);
-                emitDeclTermEnd();
+                emitStmtTermEnd();
                 compileBlockSeq(mode.thenPart, defs); // block
-                emitDeclItemEnd()
+                emitStmtItemEnd()
                 if (mode.elsePart && mode.elsePart.type != defs.keywords['if']) {
                     compileBlockSeq(mode.elsePart, defs);
 					break;
                 }
             }
-            emitDeclEnd();
+            emitStmtEnd();
         } else {
             emitApp();
             emitSym('prog1', 'if');
@@ -835,11 +877,11 @@ function compileNode(node, defs) {
         emitAppEnd();
         break;
     case defs.keywords['switch']:
-        emitDecl();
+        emitStmt();
         emitSym('switch1', 'case');
         compileNode(node.discriminant, defs);
         compileNodes(node.cases, defs);
-        emitDeclEnd();
+        emitStmtEnd();
         break;
     case defs.keywords['this']:
         emitSym('ecmascript3', 'this');
@@ -854,17 +896,17 @@ function compileNode(node, defs) {
         emitSym('logic1', 'true');
         break;
     case defs.keywords['try']:
-        emitDecl();
+        emitApp();
         emitSym('prog2', 'try');
         compileBlock1(node.tryBlock, defs);
         compileNodes(node.catchClauses, defs);
 	    if (node.finallyBlock) {
-	        emitDecl();
+	        emitApp();
             emitSym('prog2', 'finally');
 	        compileBlock1(node.finallyBlock, defs);
-	        emitDeclEnd();
+	        emitAppEnd();
 	    }
-        emitDeclEnd();
+        emitAppEnd();
         break;
     case defs.keywords['typeof']:
         emitApp();

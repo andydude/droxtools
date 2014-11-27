@@ -10,67 +10,42 @@
 from __future__ import absolute_import
 
 __all__ = [
-    'ci',
-    'csymbol',
-    'cbytes',
-    'cs',
-    'cn',
-    'emptyset',
-    'pi',
-    'eulergamma',
-    'infinity',
-    'integers',
-    'reals',
-    'rationals',
-    'naturalnumbers',
-    'complexes',
-    'primes',
-    'exponentiale',
-    'imaginaryi',
-    'notanumber',
-    'true',
-    'false',
-    'apply',
-    'plus'
+    '_namespace_mapping',
 ]
 
-from .arith import (
-    CPlus as plus,
-)
+from . import models
+from . import literals
+from . import symbols
 
-from .models import (
-    Math as math,
-    CApply as apply,
-)
+import argparse
 
-from .literals import (
-    CBinary as cbytes,
-    CString as cs,
-)
+_namespace_mapping = argparse.Namespace()
+_namespace_mapping.__dict__.update({
+    'cn': literals.CNumber,
+    'cs': literals.CString,
+    'cbytes': literals.CBinary,
+    'emptyset': literals.CConstant,
+    'pi': literals.CConstant,
+    'eulergamma': literals.CConstant,
+    'infinity': literals.CConstant,
+    'integers': literals.CConstant,
+    'reals': literals.CConstant,
+    'rationals': literals.CConstant,
+    'naturalnumbers': literals.CConstant,
+    'complexes': literals.CConstant,
+    'primes': literals.CConstant,
+    'exponentiale': literals.CConstant,
+    'imaginaryi': literals.CConstant,
+    'notanumber': literals.CConstant,
+    'true': literals.CBoolean,
+    'false': literals.CBoolean,
+    'csymbol': symbols.CSym,
+    'ci': symbols.CVar,
+    'math': models.Math,
+    'apply': models.CApply,
 
-from .numbers import (
-    CNumber as cn,
-)
-
-from .symbols import (
-    CSym as csymbol,
-    CVar as ci,
-)
-
-from .constants import (
-    CConstantSym as emptyset,
-    CConstantSym as pi,
-    CConstantSym as eulergamma,
-    CConstantSym as infinity,
-    CConstantSym as integers,
-    CConstantSym as reals,
-    CConstantSym as rationals,
-    CConstantSym as naturalnumbers,
-    CConstantSym as complexes,
-    CConstantSym as primes,
-    CConstantSym as exponentiale,
-    CConstantSym as imaginaryi,
-    CConstantSym as notanumber,
-    CBoolean as true,
-    CBoolean as false,
-)
+    
+    #'bind': models.CBind,
+    'set': models.CSet,
+    'list': models.CList,
+})

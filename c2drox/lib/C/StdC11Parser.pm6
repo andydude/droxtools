@@ -1,5 +1,5 @@
 # References ISO/IEC 9899:1990 "Information technology - Programming Language C" (C89 for short)
-#use Grammar::Tracer;
+use Grammar::Debugger;
 use C::StdC11Lexer;
 grammar C::StdC11Parser is C::StdC11Lexer;
 
@@ -264,9 +264,9 @@ proto rule storage-class-specifier {*}
 rule storage-class-specifier:sym<typedef>  { <sym> { $*TYPEDEF_CONTEXT = True; } }
 rule storage-class-specifier:sym<extern>   { <sym> { $*EXTERN_CONTEXT = True; } }
 rule storage-class-specifier:sym<static>   { <sym> { $*STATIC_CONTEXT = True; } }
-rule storage-class-specifier:sym<_Thread_local> { <sym> }
-rule storage-class-specifier:sym<auto>     { <sym> }
-rule storage-class-specifier:sym<register> { <sym> }
+rule storage-class-specifier:sym<_Thread_local> { <sym> { $*THREAD_LOCAL_CONTEXT = True; } }
+rule storage-class-specifier:sym<auto>     { <sym> { $*AUTO_CONTEXT = True; } }
+rule storage-class-specifier:sym<register> { <sym> { $*REGISTER_CONTEXT = True; } }
 
 # SS 6.7.2
 proto rule type-specifier {*}
@@ -293,7 +293,7 @@ rule type-specifier:sym<typedef-name>    {
 # SS 6.7.2.1
 proto rule struct-or-union-specifier {*}
 rule struct-or-union-specifier:sym<spec> {
-     <struct-or-union> <ident>
+     <struct-or-union> <ident> <!before '{'>
 }
 rule struct-or-union-specifier:sym<decl> {
      <struct-or-union> <ident>? 
@@ -304,7 +304,7 @@ proto rule struct-or-union {*}
 rule struct-or-union:sym<struct> { <struct-keyword> }
 rule struct-or-union:sym<union>  { <union-keyword> }
 
-rule struct-declaration-list { <struct-declaration>* }
+rule struct-declaration-list { <struct-declaration>+ }
 
 proto rule struct-declaration {*}
 rule struct-declaration:sym<struct> { 
@@ -638,7 +638,7 @@ rule translation-unit {
 }
 
 proto rule external-declaration {*}
-rule external-declaration:sym<function-definition> { <function-definition> }
+#rule external-declaration:sym<function-definition> { <function-definition> }
 rule external-declaration:sym<declaration> { <declaration> }
 #rule external-declaration:sym<control-line> { <control-line> }
 

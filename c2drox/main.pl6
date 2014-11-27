@@ -11,4 +11,5 @@ if ($filename eq '-') {
 
 my $actions = DROX::DROXActions.new();
 my $match = C::StdC11Parser.parse($source, :$actions);
+say $match;
 say $match.ast;

@@ -96,7 +96,7 @@ class Sym(Id):
         """
         Converts a URL into a symbol, same as Sym(url).
         """
-        return Sym(url)
+        return cls(url)
 
     @classmethod
     def from_etree(cls, tag_str):
@@ -133,7 +133,7 @@ class Sym(Id):
         Not mentioned in ECMA-357 is that it is a valid URL.
         """
         url = ns + '::' + name
-        return Sym(url)
+        return cls(url)
 
     @property
     def xmlns(self):
@@ -157,7 +157,7 @@ class Sym(Id):
         according to the OpenMath 2.0 standard
         """
         url = cdbase + '/' + cd + '#' + name
-        return Sym(url)
+        return cls(url)
 
     @property
     def omsym(self):
@@ -178,7 +178,7 @@ class Sym(Id):
     @classmethod
     def from_cmathml(cls, tree):
         name = tree.tag.rsplit('}')[1]
-        if name == cls._contentName:
+        if name == 'csymbol':
             sym = cls.from_cmathml_symbol(tree)
             return Sym.resolve(sym)
         else:
@@ -348,6 +348,35 @@ class DTerm(Syntax):
 class DData(Syntax):
     pass
 
+
+class Constant(Lit):
+    
+    @classmethod
+    def from_cmathml(cls, tree):
+        url = tree.tag
+        return cls(url)
+
+    @property
+    def cmathml(self):
+        tag = self.url
+        return etree.Element(tag)
+
+class Boolean(Lit):
+
+    def __init__(self, flag):
+        self.flag = flag
+    
+    @classmethod
+    def from_cmathml(cls, tree):
+        name = tree.tag[1:].split('}')[1]
+        flag = True if name == 'true' else False if name == 'false' else None
+        return cls(flag)
+    
+    @property
+    def cmathml(self):
+        tag = '{' + MATHML_NS + '}' + str(self.flag).lower()
+        return etree.Element(tag)
+
 class Number(Lit):
     _contentName = 'cn'
     
@@ -376,6 +405,8 @@ class Number(Lit):
     @property
     def cmathml(self):
         num = repr(self.num)
+        if num.endswith("L"):
+            num = num[:-1]
         if 'E' not in num.upper() and '.' in num:
             num = num.rstrip('0').rstrip('.')
         tag = '{' + MATHML_NS + '}' + self._contentName
@@ -427,9 +458,13 @@ class Real(Number):
         if base and base != 10:
             raise ValueError, base            
         num = float(tree.text)
-        if 'E' not in tree.text.upper() and tree.attrib.get('type') is None:
+        if 'E' not in tree.text.upper() and \
+            tree.attrib.get('type') is None:
             try:
-                num2 = int(tree.text.rstrip('0').rstrip('.'), 10)
+                text = tree.text
+                if 'E' not in text.upper() and '.' in text:
+                    text = text.rstrip('0').rstrip('.')
+                num2 = int(text, 10)
                 return Integer(num2, 'integer')
             except ValueError:
                 pass

@@ -9,23 +9,9 @@
 # GNU Lesser General Public License ("LGPLv3") <https://www.gnu.org/licenses/lgpl.html>.
 from __future__ import absolute_import
 
-from ..etree import etree
-from ..models import Sym
+from ..resolver import BuiltinReader
 from .config import MATHML_NS
-from .elements import cmathml
 
-class Reader(object):
+class Reader(BuiltinReader):
     def __init__(self):
-        pass
-
-    def __call__(self, sym, tree):
-        if not etree.iselement(tree):
-            raise ValueError, tree
-        
-        ns, name = Sym.from_etree(tree.tag).xmlns
-        if ns != MATHML_NS:
-            raise ValueError, ns
-    
-        ElemCls = getattr(cmathml, name)
-        ast = ElemCls.from_cmathml(tree)
-        return ast
+        BuiltinReader.__init__(self, ns = MATHML_NS, package = __package__)

@@ -19,6 +19,8 @@ from drox.eval import drox_eval
 from drox.write import drox_write
 from drox.init import drox_init
 
+DROXI_DEBUG = True
+
 def parse_args():
     """
     droxi - Drosera Object XML Interpreter
@@ -49,15 +51,15 @@ def main(args):
     drox_init()
     
     env = {}
+    if DROXI_DEBUG: print("--- # read")
     exp = drox_read()
     #            dump_expr(exp)
-    print("--- # read")
-    drox_write(exp)
-    print("--- # eval")
+    if DROXI_DEBUG: print("--- # eval")
+    if DROXI_DEBUG: drox_write(exp)
     exp = drox_eval(exp, env)
-    print("--- # write")
+    if DROXI_DEBUG: print("--- # write")
     drox_write(exp)
-    
+
 
 if __name__ == '__main__':
     sys.exit(main(parse_args()))

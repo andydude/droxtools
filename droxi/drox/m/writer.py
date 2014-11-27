@@ -9,20 +9,9 @@
 # GNU Lesser General Public License ("LGPLv3") <https://www.gnu.org/licenses/lgpl.html>.
 from __future__ import absolute_import
 
-from ..etree import etree
+from ..resolver import BuiltinWriter
 from .config import MATHML_NS
 
-class Writer(object):
+class Writer(BuiltinWriter):
     def __init__(self):
-        pass
-    
-    def __call__(self, ast):
-        if hasattr(ast, 'cmathml'):
-            try:
-                tree =  ast.cmathml
-            except Exception as err:
-                print("cought exception in Writer" + repr(err))
-                raise
-            return tree
-        
-        raise NotImplementedError
+        BuiltinWriter.__init__(self, ns = MATHML_NS, package = __package__)

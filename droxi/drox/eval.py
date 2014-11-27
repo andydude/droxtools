@@ -53,9 +53,12 @@ def drox_eval(exp, env):
     applier = drox_eval_literal(exp.applier, env)
     args    = drox_eval_literal(exp.args, env)
     if DEBUG: print("eval <= " + repr(applier))
-    if DEBUG: print("eval <= " + repr(args))
+    if DEBUG: print("eval <= " + repr(applier.url))
+    if DEBUG: print("eval () " + repr(args))
+    if DEBUG: print(repr(applier.__call__))
     
-    ret = applier(*args)
+    ret = applier.__call__(*args)
+    if DEBUG: print("eval => " + repr(ret))
     if ret == NotImplemented:
         exp = exp.__class__(applier, *args)
         return exp

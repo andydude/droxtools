@@ -1,33 +1,17 @@
-'''
-Created on Mar 30, 2014
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# droxi
+# Copyright (c) 2014, Andrew Robbins, All rights reserved.
+# 
+# This library ("it") is free software; it is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; you can redistribute it and/or modify it under the terms of the
+# GNU Lesser General Public License ("LGPLv3") <https://www.gnu.org/licenses/lgpl.html>.
+from __future__ import absolute_import
 
-@author: ajr
-'''
-
-import importlib
-
-from ..etree import etree
-from ..models import Sym
 from .config import DROSOFT_CDBASE
+from ..resolver import BuiltinResolver
 
-class Resolver(object):
+class Resolver(BuiltinResolver):
     def __init__(self):
-        pass
-
-    def __call__(self, sym):
-        if not isinstance(sym, Sym):
-            raise ValueError, sym
-        
-        cdbase, cd, name = sym.omsym
-        if cdbase != DROSOFT_CDBASE:
-            #raise ValueError, cdbase
-            cdbase = DROSOFT_CDBASE
-    
-        DictCls = importlib.import_module(__package__ + '.' + cd + '._mapping')
-        if hasattr(DictCls, '__content_dictionary_mapping__'):
-            ElemCls = DictCls.__content_dictionary_mapping__[name]
-        else:
-            ElemCls = getattr(DictCls, name)
-        url = cdbase + '/' + cd + '#' + name
-        ast = ElemCls(url)
-        return ast
+        BuiltinResolver.__init__(cdbase = DROSOFT_CDBASE, package = __package__)

@@ -1,5 +1,6 @@
 #!PERL6LIB=lib perl6 
 use v6;
+use Grammar::Debugger;
 use C::StdC11Parser;
 my $filename = @*ARGS[0];
 my $source = '';

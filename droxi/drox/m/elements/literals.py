@@ -8,10 +8,28 @@
 # but WITHOUT ANY WARRANTY; you can redistribute it and/or modify it under the terms of the
 # GNU Lesser General Public License ("LGPLv3") <https://www.gnu.org/licenses/lgpl.html>.
 from __future__ import absolute_import
+
 import six
 import base64
 from ...etree import etree
+from ...models import Constant, Boolean, Number, Integer, Real
 from ..config import MATHML_NS
+
+class CNumber(Number):
+    pass
+
+class CInt(Integer):
+    pass
+
+class CFlo(Real):
+    pass
+
+
+class CConstant(Constant):
+    pass
+
+class CBoolean(Boolean):
+    pass
 
 class CData(object):
     def __init__(self):

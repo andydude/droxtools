@@ -28,6 +28,8 @@ constant $AD_STAG = '<drox:ld>';
 constant $AD_ETAG = '</drox:ld>';
 constant $BL_STAG = '<m:bind>';
 constant $BL_ETAG = '</m:bind>';
+constant $BG_STAG = '<drox:bvars>';
+constant $BG_ETAG = '</drox:bvars>';
 constant $BV_STAG = '<m:bvar>';
 constant $BV_ETAG = '</m:bvar>';
 constant $RT_STAG = '<drox:rt>';
@@ -582,6 +584,7 @@ method declaration:sym<declaration>($/) {
 
     sub is_typedef($/) {
         {
+            say "is_typedef()";
             if $<declaration-specifiers><declaration-specifier>[0]<storage-class-specifier><sym>.perl eq 'Any' {
                 return False;
             }
@@ -597,6 +600,7 @@ method declaration:sym<declaration>($/) {
 
     sub is_func($/) {
         {
+            say "is_func()";
             #say $<init-declarator-list>[0]<init-declarator>[0]<declarator><direct-declarator><direct-declarator-rest>[0]<parameter-type-list>.perl;
             if $<init-declarator-list>[0]<init-declarator>[0]<declarator><direct-declarator><direct-declarator-rest>[0]<parameter-type-list>.perl eq 'Any' {
                 return False;
@@ -654,6 +658,8 @@ method declaration:sym<declaration>($/) {
         $str ~= $DL_ETAG;
         make $str;
     } elsif $<init-declarator-list> {
+        say "is_declarator()";
+        
         our $str = $DL_STAG;
         $str ~= '<prog1:local_var/>';
 
@@ -689,6 +695,7 @@ method declaration:sym<declaration>($/) {
         $str ~= $DL_ETAG;
         make $str;
     } else {
+        say "is_other()";
         make $<declaration-specifiers>.ast;
     }
 }
@@ -698,7 +705,7 @@ method declaration:sym<static_assert>($/) {
 }
 
 method declaration-specifiers($/) {
-    make (map {$_.ast}, @<declaration-specifier>)
+    make (map {$_.ast}, @<declaration-specifier>);
 }
 
 method declaration-specifier:sym<storage-class>($/) {
@@ -819,6 +826,7 @@ method type-specifier:sym<typedef-name>($/) {
 }
 
 method struct-or-union-specifier:sym<spec>($/) {
+    say "struct-or-union-specifier:sym<spec>";
     make $AL_STAG
        ~ $<struct-or-union>.ast
        ~ $<ident>.ast
@@ -826,13 +834,14 @@ method struct-or-union-specifier:sym<spec>($/) {
 }
 
 method struct-or-union-specifier:sym<decl>($/) {
+    say "struct-or-union-specifier:sym<decl>";
     make $DL_STAG
        ~ $<struct-or-union>.ast
        ~ $DT_STAG
        ~ $<ident>.ast
        ~ $DT_ETAG
        ~ $<struct-declaration-list>.ast
-       ~ $DL_STAG;
+       ~ $DL_ETAG;
 }
 
 method struct-or-union:sym<struct>($/) {
@@ -844,22 +853,98 @@ method struct-or-union:sym<union>($/) {
 }
 
 method struct-declaration-list($/) {
-    make $<struct-declaration>.join;
+    make (map {$_.ast}, @<struct-declaration>).join;
 }
 
 method struct-declaration:sym<struct>($/) {
-    make {
-        type => $<specifier-qualifier-list>.ast,
-        body => $<struct-declarator-list>.ast
+    say "struct-declaration:sym<struct>";
+    say $<struct-declarator-list>.ast;
+    say $<struct-declarator-list>.perl;
+    say $<specifier-qualifier-list>.ast;
+    say $<specifier-qualifier-list>.perl;
+    my $name = $<struct-declarator-list>.ast[0].ast{'name'};
+    my $decl_type = $<struct-declarator-list>.ast[0].ast{'type'};
+    my $base_type = $<specifier-qualifier-list>.ast;
+    my $str = "";
+
+    if (1) {
+        $str ~= $DI_STAG
+            ~ $DT_STAG
+            ~ $name
+            ~ $DT_ETAG
+            ~ ":"
+            ~ $decl_type
+            ~ ";"
+            ~ $base_type
+            ~ ","
+            ~ $DI_ETAG;
     }
+
+    make $str;
 }
+
+sub build-type($obj) {
+    note $obj.perl;
+    if ($obj.WHAT == Str) {
+        return "build-type(Str)";
+    }
+    my $type = $obj{'type'}.join;
+    my $str = $obj{'rest'}.join;
+    if ($obj{'type'}.elems > 0) {
+        $str = $AL_STAG
+            ~ $type
+            ~ $str
+            ~ $AL_ETAG;
+    }
+    return $str;
+}
+
+#sub build-specifier-qualifier(%obj) {
+#    say "build-specifier-qualifier(" ~ %obj.Str ~ ")";
+#    if (%obj.WHAT == Str) {
+#        return "build-specifier-qualifier(Str)";
+#    }
+#    say "build-specifier-qualifier(Array)";
+#
+#    my $type = build-type(%obj);
+#    my $name = %obj{'name'};
+#    my $str = $DI_STAG
+#        ~ $DT_STAG
+#        ~ $name
+#        ~ $DT_ETAG
+#        ~ $TL_STAG
+#        ~ $type
+#        ~ $TL_ETAG
+#        ~ $DI_ETAG;
+#
+#    return $str;
+#}
+#
+#sub build-struct-declarator(%obj) {
+#    note "build-struct-declarator(" ~ %obj.perl ~ ")";
+#    #say %obj.WHAT.Str;
+#    if (%obj.WHAT == Str) {
+#        return "build-struct-declarator(Str)";
+#    }
+#    #say "build-struct-declarator(Array)";
+#
+#
+#    return $str;
+#}
 
 method struct-declaration:sym<static_assert>($/) {
     make $<static-assert-declaration>.ast;
 }
 
 method specifier-qualifier-list($/) {
-    make $<specifier-qualifier>.join;
+    my $str = (map {$_.ast}, @<specifier-qualifier>).join;
+    if (@<specifier-qualifier>.elems != 1) {
+        $str = $AL_STAG
+             ~ "<c89:specifier_qualifier_list/>"
+             ~ $str
+             ~ $AL_ETAG;
+    }
+    make $str;
 }
 
 method specifier-qualifier:sym<type-specifier>($/) {
@@ -871,11 +956,32 @@ method specifier-qualifier:sym<type-qualifier>($/) {
 }
 
 method struct-declarator-list($/) {
-    make $<struct-declarator>.join;
+    make @<struct-declarator>;
 }
 
 method struct-declarator:sym<declarator>($/) {
     make $<declarator>.ast;
+
+    # my $type = $obj{'type'};
+    # if ($obj{'type'}.elems > 0) {
+    #     $str = $AL_STAG
+    #         ~ $type
+    #         ~ $str
+    #         ~ $AL_ETAG;
+    # }
+    # 
+    # my $type = build-type($obj);
+    # my $name = $obj{'name'};
+    # my $str = $DI_STAG
+    #     ~ $DT_STAG
+    #     ~ $name
+    #     ~ $DT_ETAG
+    #     ~ $TL_STAG
+    #     ~ $type
+    #     ~ $TL_ETAG
+    #     ~ $DI_ETAG;
+    # 
+    # make $str;
 }
 
 # This is rare, but used in modern code
@@ -1072,36 +1178,47 @@ method parameter-declaration:sym<abstract>($/) {
 }
 
 method identifier-list($/) {
+    make "TODO";
 }
 
 method type-name($/) {
+    make "TODO";
 }
 
 method abstract-declarator:sym<pointer>($/) {
+    make "TODO";
 }
 
 method abstract-declarator:sym<direct-abstract>($/) {
+    make "TODO";
 }
 
 method direct-abstract-declarator($/) {
+    make "TODO";
 }
 
 method direct-abstract-declarator-first:sym<abstract>($/) {
+    make "TODO";
 }
 
 method direct-abstract-declarator-rest:sym<b-type-qualifier>($/) {
+    make "TODO";
 }
 
 method direct-abstract-declarator-rest:sym<b-static-type-qualifier>($/) {
+    make "TODO";
 }
 
 method direct-abstract-declarator-rest:sym<b-type-qualifier-static>($/) {
+    make "TODO";
 }
 
 method direct-abstract-declarator-rest:sym<b-*>($/) {
+    make "TODO";
 }
 
 method direct-abstract-declarator-rest:sym<p-parameter-type-list>($/) {
+    make "TODO";
 }
 
 method typedef-name($/) {
@@ -1144,7 +1261,11 @@ method designator:sym<.>($/) {
 method designator:sym<[ ]>($/) {
 }
 
-method static_assert-declaration($/) {
+method static-assert-declaration($/) {
+   say "static_assert-declaration";
+   make $AL_STAG
+      ~ "<c11:static_assert/>"
+      ~ $AL_ETAG;
 }
 
 method statement:sym<labeled>($/) {
@@ -1213,21 +1334,58 @@ method expression-statement($/) {
 }
 
 method selection-statement:sym<if>($/) {
+    make $SL_STAG
+       ~ '<c89:if/>'
+       ~ $<expression>.ast
+       ~ '<m:apply><m:csymbol cd="prog1">block</m:csymbol>'
+       ~ $<then_statement>.ast
+       ~ '</m:apply>'
+       ~ '<m:apply><m:csymbol cd="prog1">block</m:csymbol>'
+       ~ $<else_statement>.ast
+       ~ '</m:apply>'
+       ~ $SL_ETAG;
 }
 
 method selection-statement:sym<switch>($/) {
+    make $SL_STAG
+       ~ '<c89:switch/>'
+       ~ $<expression>.ast
+       ~ $<statement>.ast
+       ~ $SL_ETAG;
 }
 
 method iteration-statement:sym<while>($/) {
+    make $SL_STAG
+       ~ '<c89:while/>'
+       ~ $<expression>.ast
+       ~ $<statement>.ast
+       ~ $SL_ETAG;
 }
 
 method iteration-statement:sym<do_while>($/) {
+    make $SL_STAG
+       ~ '<c89:do_while/>'
+       ~ $<expression>.ast
+       ~ $<statement>.ast
+       ~ $SL_ETAG;
 }
 
 method iteration-statement:sym<for>($/) {
+    make $SL_STAG
+       ~ '<c89:for/>'
+       ~ $<init>.ast
+       ~ $<test>.ast
+       ~ $<step>.ast
+       ~ $SL_ETAG;
 }
 
 method iteration-statement:sym<for_decl>($/) {
+    make $SL_STAG
+       ~ '<c99:for_decl/>'
+       ~ $<init>.ast
+       ~ $<test>.ast
+       ~ $<step>.ast
+       ~ $SL_ETAG;
 }
 
 method jump-statement:sym<goto>($/) {
@@ -1265,6 +1423,7 @@ method external-declaration:sym<declaration>($/) {
 }
 
 method function-definition:sym<modern>($/) {
+    say "function-definition:sym<modern>";
     my $types = $<declaration-specifiers>.ast;
     my $obj = $<declarator>.ast;
     our $str = $DL_STAG;
@@ -1292,8 +1451,9 @@ method function-definition:sym<modern>($/) {
     make $str;
 }
 
-#method function-definition:sym<ancient>($/) {
-#}
+method function-definition:sym<ancient>($/) {
+    say "function-definition:sym<ancient>";
+}
 
 method declaration-list($/) {
     make (map {$_.ast}, @<declaration>).join;
