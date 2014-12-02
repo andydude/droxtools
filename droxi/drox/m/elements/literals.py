@@ -41,6 +41,7 @@ class CBinary(CData):
     _openmathName = 'OMB'
     
     def __init__(self, data):
+        assert isinstance(data, six.binary_type)
         self.data = data
 
     @classmethod
@@ -56,13 +57,23 @@ class CBinary(CData):
         tree = etree.Element(tag)
         tree.text = base64.b64encode(self.data)
         return tree
+
+    def __bytes__(self):
+        return six.binary_type(self.data)
+
+    def __str__(self):
+        return self.__unicode__() if six.PY3 else self.__bytes__()
     
+    def __unicode__(self):
+        return six.text_type(self.data.decode('utf-8'))
+
 class CString(CData):
     _contentName = 'cs'
     _presentName = 'ms'
     _openmathName = 'OMSTR'
 
     def __init__(self, text):
+        assert isinstance(text, six.text_type)
         self.text = text
 
     @classmethod
@@ -78,6 +89,15 @@ class CString(CData):
         tree = etree.Element(tag)
         tree.text = self.text
         return tree
+
+    def __bytes__(self):
+        return six.binary_type(self.text.encode('utf-8'))
+
+    def __str__(self):
+        return self.__unicode__() if six.PY3 else self.__bytes__()
+    
+    def __unicode__(self):
+        return six.text_type(self.text)
 
 class CGlyph(CData):
     presentName = 'mglyph'

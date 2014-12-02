@@ -1,0 +1,13 @@
+Name:           c2drox
+Version:        0.1
+Cabal-Version:  >= 1.2
+License:        LGPL-3
+License-File:   LICENSE
+Author:         Andrew Robbins
+Homepage:       http://andydude.github.io/droxtools/c2drox-haskell
+Synopsis:       A converter from C Source to Drosera Object XML (DROX)
+Build-Type:     Simple
+
+Executable c2drox
+  Build-Depends:  base
+  Main-Is: CSyntaxRead.hs

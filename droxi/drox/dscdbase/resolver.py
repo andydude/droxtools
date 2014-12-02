@@ -14,4 +14,4 @@ from ..resolver import BuiltinResolver
 
 class Resolver(BuiltinResolver):
     def __init__(self):
-        BuiltinResolver.__init__(cdbase = DROSOFT_CDBASE, package = __package__)
+        BuiltinResolver.__init__(self, cdbase = DROSOFT_CDBASE, package = __package__)

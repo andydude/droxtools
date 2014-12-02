@@ -11,15 +11,27 @@ from __future__ import absolute_import
 from __future__ import print_function
 
 from ...models import Sym
-from .void import DVoid
+from ..config import DROSOFT_CDBASE
+from .null import DNull
 
 class DPrint(Sym):
+    _symbolCdbase = DROSOFT_CDBASE
+    _symbolCd = 'prog2'
+    _symbolName = 'print'
+    url = _symbolCdbase + '/' + _symbolCd + '#' + _symbolName
+
     def __call__(self, *args):
-        print(*args, end='')
-        return DVoid()
+        import sys
+        print(*map(str, args), end='', file=sys.stderr)
+        return DNull()
     
 class DPrintLine(Sym):
+    _symbolCdbase = DROSOFT_CDBASE
+    _symbolCd = 'prog2'
+    _symbolName = 'println'
+    url = _symbolCdbase + '/' + _symbolCd + '#' + _symbolName
+
     def __call__(self, *args):
-        print(*args)
-        return DVoid()
-        
+        import sys
+        print(*map(str, args), file=sys.stderr)
+        return DNull()

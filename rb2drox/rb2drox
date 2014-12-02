@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for FILE in "$@"; do
+    ruby RubyRead.rb $FILE | xmllint --format -
+done

@@ -19,7 +19,7 @@ from drox.eval import drox_eval
 from drox.write import drox_write
 from drox.init import drox_init
 
-DROXI_DEBUG = True
+DROXI_DEBUG = False
 
 def parse_args():
     """

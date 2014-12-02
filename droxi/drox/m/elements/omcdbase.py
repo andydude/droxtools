@@ -11,7 +11,6 @@ from __future__ import absolute_import
 
 from ...omcdbase.arith1 import _mapping as arith1
 from ...omcdbase.integer1 import _mapping as integer1
-
 from ...omcdbase.quant1._mapping import _namespace_mapping as quant1
 from ...omcdbase.complex1._mapping import _namespace_mapping as complex1
 from ...omcdbase.rounding1._mapping import _namespace_mapping as rounding1

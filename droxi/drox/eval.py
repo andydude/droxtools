@@ -49,6 +49,9 @@ def drox_eval(exp, env):
         return drox_eval_literal(exp, env)
     
     # TODO: transformers
+    if hasattr(exp.applier, '__transform__'):
+        ret = exp.applier.__transform__(exp.applier, *exp.args, env=env)
+        return ret
     
     applier = drox_eval_literal(exp.applier, env)
     args    = drox_eval_literal(exp.args, env)
@@ -57,7 +60,11 @@ def drox_eval(exp, env):
     if DEBUG: print("eval () " + repr(args))
     if DEBUG: print(repr(applier.__call__))
     
-    ret = applier.__call__(*args)
+    if hasattr(applier, '__call__'):
+        ret = applier.__call__(*args)
+    else:
+        print("Called a non-callable!")
+        
     if DEBUG: print("eval => " + repr(ret))
     if ret == NotImplemented:
         exp = exp.__class__(applier, *args)

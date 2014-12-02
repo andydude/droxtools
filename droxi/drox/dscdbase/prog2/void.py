@@ -1,12 +1,16 @@
-'''
-Created on Mar 31, 2014
-
-@author: ajr
-'''
-
-from ...etree import etree
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# droxi
+# Copyright (c) 2014, Andrew Robbins, All rights reserved.
+# 
+# This library ("it") is free software; it is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; you can redistribute it and/or modify it under the terms of the
+# GNU Lesser General Public License ("LGPLv3") <https://www.gnu.org/licenses/lgpl.html>.
+from __future__ import absolute_import
 from ...models import Sym
 from ..config import DROSOFT_CDBASE
+from .null import DNull
 
 class DVoid(Sym):
     _symbolCdbase = DROSOFT_CDBASE
@@ -14,15 +18,14 @@ class DVoid(Sym):
     _symbolName = 'void'
     url = _symbolCdbase + '/' + _symbolCd + '#' + _symbolName
     
-    def __init__(self):
+    def __init__(self, *args):
         Sym.__init__(self, DVoid.url)
 
     def __call__(self, *args):
-        return self
+        return DNull()
         
-    def __eval__(self):
+    def __eval__(self, env):
         return self
     
-#     def __tree__(self):
-#         return self.cmathml_element
-#         #return self # etree.Comment(" void ")
+    def __tree__(self):
+        return self.cmathml_symbol

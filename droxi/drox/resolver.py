@@ -71,8 +71,9 @@ class BuiltinReader(object):
         return ast
 
 class BuiltinWriter(object):
-    def __init__(self):
-        pass
+    def __init__(self, ns=None, package=None):
+        self.package = package
+        self.ns = ns
     
     def __call__(self, ast):
         try:
