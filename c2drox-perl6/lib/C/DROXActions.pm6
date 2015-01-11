@@ -1184,9 +1184,11 @@ method declarator:sym<direct>($/) {
     my $ast = $<direct-declarator>.ast;
     my @pointers = map {$_.ast}, @<pointer>;
     for @pointers -> $pointer {
-        $ast = -> $type, $init {
-            $ast($pointer($type), $init)
+        my $ast2 = $ast;
+        my $ast3 = -> $type, $init {
+            $ast2($pointer($type), $init)
         };
+        $ast = $ast3;
     }
 	make $ast;
 }

@@ -1,10 +1,10 @@
 #!/bin/bash
 CC="gcc"
 CPP="gcc -E"
-MAIN="perl6 -Ilib main.pl6"
+PARSE="/usr/bin/env perl6-m -I lib CRead.pl6"
 
 if [ x"$1" = x"-r" ]; then
-   ${CPP} $2 | grep -v '^#' | ${MAIN} -
+   ${CPP} $2 | grep -v '^#' | ${PARSE} -
 else
-   ${CPP} $1 | grep -v '^#' | ${MAIN} - | xmllint --format -
+   ${CPP} $1 | grep -v '^#' | ${PARSE} - | xmllint --format -
 fi

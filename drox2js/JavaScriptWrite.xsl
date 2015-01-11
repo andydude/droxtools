@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <t:stylesheet version="1.0" 
-    xmlns:t="http://www.w3.org/1999/XSL/Transform"
-    xmlns:js="http://drosoft.org/cd/ecmascript3#">
+              xmlns:t="http://www.w3.org/1999/XSL/Transform"
+              xmlns:m="http://www.w3.org/1998/Math/MathML"
+              xmlns:drox="http://drosoft.org/ns/drosera"
+              xmlns:es3="http://drosoft.org/cd/ecmascript3#"
+              xmlns:es5="http://drosoft.org/cd/ecmascript5#">
 
   <t:strip-space elements="*"/>
 
@@ -65,7 +68,7 @@
     <t:apply-templates/>
   </t:template>
 
-  <t:template match="js:script">
+  <t:template match="es3:script">
     <t:for-each select="*">
       <t:apply-templates select="."/>
       <t:text>
@@ -74,7 +77,7 @@
   </t:template>
 
 
-  <t:template match="js:ci">
+  <t:template match="es3:ci">
     <t:value-of select="text()"/>
 <!--
     <t:param name="tabs" select="''"/>
@@ -87,11 +90,11 @@
 -->
   </t:template>
 
-  <t:template match="js:cn">
+  <t:template match="es3:cn">
     <t:value-of select="text()[1]"/>
   </t:template>
 
-  <t:template match="js:cs">
+  <t:template match="es3:cs">
     <t:choose>
       <t:when test="@type = 'double'">
 	<t:text>"</t:text>
@@ -106,14 +109,14 @@
     </t:choose>
   </t:template>
 
-  <t:template match="js:dd">
+  <t:template match="es3:dd">
     <t:param name="tabs" select="''"/>
     <t:apply-templates>
       <t:with-param name="tabs" select="$tabs"/>
     </t:apply-templates>
   </t:template>
 
-  <t:template match="js:di">
+  <t:template match="es3:di">
     <t:param name="tabs" select="''"/>
     <t:value-of select="$tabs"/>
     <t:apply-templates>
@@ -125,7 +128,7 @@
     </t:if>
   </t:template>
 
-  <t:template match="js:dl">
+  <t:template match="es3:dl">
     <t:param name="tabs" select="''"/>
     <t:text>{
 </t:text>
@@ -136,25 +139,25 @@
 }</t:text>
   </t:template>
 
-  <t:template match="js:dt">
+  <t:template match="es3:dt">
     <t:param name="tabs" select="''"/>
     <t:value-of select="text()"/>
     <t:text>: </t:text>
   </t:template>
 
-  <t:template match="js:false">
+  <t:template match="es3:false">
     <t:text>null</t:text>
   </t:template>
 
-  <t:template match="js:true">
+  <t:template match="es3:true">
     <t:text>null</t:text>
   </t:template>
 
-  <t:template match="js:null">
+  <t:template match="es3:null">
     <t:text>null</t:text>
   </t:template>
 
-  <t:template match="js:list">
+  <t:template match="es3:list">
     <t:text>[</t:text>
     <t:for-each select="*">
       <t:apply-templates select="."/>
@@ -165,7 +168,7 @@
     <t:text>]</t:text>
   </t:template>
 
-  <t:template match="js:apply">
+  <t:template match="es3:apply">
     <t:param name="tabs" select="''"/>
     <t:choose>
       <t:when test="local-name(*[position()=1])='lambda'">
@@ -191,11 +194,11 @@
   <t:template name="common-lambda-function">
   </t:template>
 
-  <t:template match="js:lambda">
+  <t:template match="es3:lambda">
     <t:param name="tabs" select="''"/>
     <t:text>function </t:text>
     <t:text>(</t:text>
-    <t:for-each select="js:bvar">
+    <t:for-each select="es3:bvar">
       <t:apply-templates select="."/>
       <t:if test="not(position()=last())">
 	<t:text>, </t:text>
@@ -216,17 +219,17 @@
     <t:text>}</t:text>
   </t:template>
 <!--
-  <t:template match="js:function">
+  <t:template match="es3:function">
     <t:text>function </t:text>
     <t:apply-templates select="*[1]"/>
     <t:text>(</t:text>
-    <t:for-each select="js:bvar">
+    <t:for-each select="es3:bvar">
       <t:apply-templates select="."/>
       <t:if test="not(position()=last())">
 	<t:text>, </t:text>
       </t:if>
     </t:for-each>
-    <t:for-each select="js:bvar">
+    <t:for-each select="es3:bvar">
       <t:apply-templates select="."/>
     </t:for-each>
   </t:template>
@@ -274,7 +277,7 @@
     </t:for-each>
   </t:template>
 
-  <t:template match="js:return">
+  <t:template match="es3:return">
     <t:param name="tabs" select="''"/>
     <t:call-template name="standard-keyword-stmt">
       <t:with-param name="tabs" select="$tabs"/>
@@ -282,7 +285,7 @@
     </t:call-template>
   </t:template>
 
-  <t:template match="js:csymbol" mode="delete" priority="9">
+  <t:template match="es3:csymbol" mode="delete" priority="9">
     <t:param name="tabs" select="''"/>
     <t:call-template name="standard-function-expr">
       <t:with-param name="tabs" select="$tabs"/>
